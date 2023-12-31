@@ -30,3 +30,18 @@ $ crictl exec -it -t [container] ls
 $ crictl logs [container]
 $ crictl pods
 
+# Pods
+A single instance of an Application, the smallest object you can created in K8s.
+Runs on the Node.
+For scaling, a new Pod is created, running on the same or other Nodes.
+Usually have a 1-2-1 relationship with Containers.
+
+## Multi-container Pods
+A single Pod can have mulitple containers, but usually not containers of the same kind.
+A helper container might be doing some supporting task, e.g., handling file upload by a user, etc. So when a new application container is created, the helper is also created, the containers in the same pod can share storage space, and communicate with each other via localhost.
+
+The following command created a Pod with an Nginx image pulled from the public docker hub:
+$ kubectl run nginx --image nginx
+$ kubectl get pods
+
+$ kub$ kubec
