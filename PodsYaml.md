@@ -72,3 +72,7 @@ A number of ways
 Used by replica set to know which pods it is responsible for monitoring - a filter. Used in many ways in K8s.
 
 
+kubectl explain <object>
+e.g. kubectl explain replicaset
+
+When updating a replica set the pods are not automatically updated, need to delete the pods, or scale down-up.
