@@ -26,24 +26,24 @@ See configmap.yaml.
 Notice that spec is not used, rather the **data** property.
 
 ### Other commands
-`kubectl get configmaps
+`kubectl get configmaps  
 kubectl describe configmap <name>`
 
 ## Using ConfigMap in Container
 The **envFrom** property is used, this is a list, so many configMapRef can be passed:
-`envFrom:
-  - configMapRef:
+`envFrom:  
+  - configMapRef:  
     name: <config-map-name>`
 
 ### Example loading environment varible into pod from config map
-`spec:
-  containers:
-  - env:
-    - name: APP_COLOR
-      valueFrom:
-        configMapKeyRef:
-          name: webapp-config-map
-          key: APP_COLOR
+`spec:  
+  containers:  
+  - env:  
+    - name: APP_COLOR  
+      valueFrom:  
+        configMapKeyRef:  
+          name: webapp-config-map  
+          key: APP_COLOR  
     image: kodekloud/webapp-color`
 
   
