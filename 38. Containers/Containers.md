@@ -77,7 +77,7 @@ To pass in commands to ENTRYPOINT, use --command, e.g.,
 `kubectl run webapp-green --image=kodekloud/webapp-color --command python app -- --color green`
 
 Would be same as:
-apiVersion: v1
+`apiVersion: v1
 kind: Pod
 metadata:
   name: webapp-green
@@ -86,7 +86,7 @@ spec:
     - name: webapp-green
       image: kodekloud/webapp-color
       args: ["python", "app"]
-      command: ["--color", "green"]
+      command: ["--color", "green"]`
 
 
 ## Environment Variables
