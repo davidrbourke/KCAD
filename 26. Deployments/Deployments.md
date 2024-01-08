@@ -11,6 +11,7 @@ Similar to ReplicaSet file, but with different Kind: Deployment.
 
 ## Commands
 `kubectl create -f deployment.yml`
+
 `kubectl get deployments`
 
 ### Get all created resources
