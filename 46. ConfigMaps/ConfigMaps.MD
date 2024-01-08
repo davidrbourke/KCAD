@@ -8,16 +8,22 @@ The Config Map is injected into the Pod, and the environment variables are setup
 
 ## Create the ConfigMap
 ### Imperative
-`kubectl create configmap \
+```
+kubectl create configmap \
   app-config --from-literal=APP_COLOR=blue \
-             --from-literal=ANOTHER_APP_COLOR=blue`
+             --from-literal=ANOTHER_APP_COLOR=blue
+```
 
 **from-literal** is used to specify the key value pairs. **from-file** would be used to provide the key value pairs from a file:
-`kubectl create configmap \
-  <config-name> --from-file=<path-to-file>`
+```
+kubectl create configmap \
+  <config-name> --from-file=<path-to-file>
+```
 
-`kubectl create configmap \
-  app-config --from-file=app_config.properties`
+```
+kubectl create configmap \
+  app-config --from-file=app_config.properties
+```
 
 ### Declarative
 `kubectl create -f <configmap>.yaml`
@@ -31,13 +37,15 @@ Notice that spec is not used, rather the **data** property.
 
 ## Using ConfigMap in Container - whole file
 The **envFrom** property is used, this is a list, so many configMapRef can be passed, all the key value pairs in the config map will get added as ENVironment Variables.
-
-`envFrom:  
+```
+envFrom:  
   - configMapRef:  
     name: <config-map-name>`
+```
 
 ### Using ConfigMap in Container - specific values
-`spec:  
+```
+spec:  
   containers:  
   - env:  
     - name: APP_COLOR  
@@ -45,6 +53,6 @@ The **envFrom** property is used, this is a list, so many configMapRef can be pa
         configMapKeyRef:  
           name: webapp-config-map  
           key: APP_COLOR  
-    image: kodekloud/webapp-color`
-
+    image: kodekloud/webapp-color
+```
   

@@ -10,11 +10,11 @@ Similar to ReplicaSet file, but with different Kind: Deployment.
 
 
 ## Commands
-kubectl create -f deployment.yml
-kubectl get deployments
+`kubectl create -f deployment.yml`
+`kubectl get deployments`
 
 ### Get all created resources
-kubectl get all
+`kubectl get all`
 
 ### Create deployment without yaml
-kubectl create deployment httpd-frontend --image=httpd:2.4-alpine --replicas=3
+`kubectl create deployment httpd-frontend --image=httpd:2.4-alpine --replicas=3`

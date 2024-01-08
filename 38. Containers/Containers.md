@@ -77,7 +77,8 @@ To pass in commands to ENTRYPOINT, use --command, e.g.,
 `kubectl run webapp-green --image=kodekloud/webapp-color --command python app -- --color green`
 
 Would be same as:
-`apiVersion: v1
+```
+apiVersion: v1
 kind: Pod
 metadata:
   name: webapp-green
@@ -86,24 +87,31 @@ spec:
     - name: webapp-green
       image: kodekloud/webapp-color
       args: ["python", "app"]
-      command: ["--color", "green"]`
+      command: ["--color", "green"]
+```
 
 
 ## Environment Variables
 3 ways to set environment variables in Kubernetes
 1 - In the Pod or Deployment
-`env:
+```
+env:
   - name: APP_COLOR
-    value: green`
+    value: green
+```
 
 2 - In the ConfigMap
-`env:
+```
+env:
   - name: APP_COLOR
     valueFrom: 
-      configMapKeyRef:`
+      configMapKeyRef:
+```
 
 3 - In the Secrets
-`env:
+```
+env:
   - name: APP_COLOR
     valueFrom: 
-      secretKeyRef:`
+      secretKeyRef:
+```

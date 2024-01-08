@@ -7,7 +7,6 @@
   `kubectl run mypod --image=nginx --namespace=dev --dry-run -o yaml > pod-def.yml`
 
 
-
 # Imperative commnads
 Create a pod
 `kubectl run redis --image=redis:alpine`
@@ -19,15 +18,15 @@ Create a service
 `kubectl expose pod redis --port=6379 --name=redis-service`
 
 **Use --help to check parameters for a command**
-kubectl run --help
+`kubectl run --help`
 
-kubectl create deployment webapp --image=kodekloud/webapp-color --replicas=3
-kubectl run custom-nginx --image=nginx --port=8080
-kubectl create namespace dev-ns
-kubectl create deployment redis-deploy --replicas=2 --namespace=dev-ns --image=redis
+`kubectl create deployment webapp --image=kodekloud/webapp-color --replicas=3`
+`kubectl run custom-nginx --image=nginx --port=8080`
+`kubectl create namespace dev-ns`
+`kubectl create deployment redis-deploy --replicas=2 --namespace=dev-ns --image=redis`
 
 Create a pod and expose a service
-kubectl run httpd --image=httpd:alpine --port=80
-kubectl expose pod httpd --name httpd --port=80 --type=ClusterIP --dry-run=client -o yaml
+`kubectl run httpd --image=httpd:alpine --port=80`
+`kubectl expose pod httpd --name httpd --port=80 --type=ClusterIP --dry-run=client -o yaml`
 Or in one command
 `kubectl run httpd --image=httpd:alpine --port=80 --expose=true`

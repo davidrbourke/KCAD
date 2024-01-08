@@ -27,12 +27,14 @@ cluster.local - domain
 kubectl create -f pod-definition.yml --namespace=dev
 or, put namespace in yaml file.
 
+```
 metadata:
   kind: myapp-pod
   namespace: dev
   label:
     app: myapp
     type: frontend  
+```
 
 ### Create a namespace
 Use a namespace definition file:
@@ -41,11 +43,11 @@ Or with command:
 `kubectl create namespace dev`
 
 ### Get objects within a namespace
-kubectl get pods --namespace=dev
-kubectl get pods (Uses default namespace)
+`kubectl get pods --namespace=dev`
+`kubectl get pods (Uses default namespace)`
 
-kubectl get pods --all-namespaces
-kubectl get pods -A
+`kubectl get pods --all-namespaces`
+`kubectl get pods -A`
 
 ### Set current context namespace
 So you don't have to specify the namespace with each command
@@ -53,4 +55,4 @@ So you don't have to specify the namespace with each command
 
 ## Resource Quota
 See the yaml file:
-kubectl create -f compute-quota.yml
+`kubectl create -f compute-quota.yml`
