@@ -16,6 +16,3 @@ spec:
         configMapKeyRef:
           name: webapp-config-map
           key: APP_COLOR
-
-
-# Not sure the above is correct

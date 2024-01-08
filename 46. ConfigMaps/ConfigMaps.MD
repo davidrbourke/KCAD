@@ -26,16 +26,17 @@ See configmap.yaml.
 Notice that spec is not used, rather the **data** property.
 
 ### Other commands
-`kubectl get configmaps  
-kubectl describe configmap <name>`
+`kubectl get configmaps`
+`kubectl describe configmap <name>`
 
-## Using ConfigMap in Container
-The **envFrom** property is used, this is a list, so many configMapRef can be passed:
+## Using ConfigMap in Container - whole file
+The **envFrom** property is used, this is a list, so many configMapRef can be passed, all the key value pairs in the config map will get added as ENVironment Variables.
+
 `envFrom:  
   - configMapRef:  
     name: <config-map-name>`
 
-### Example loading environment varible into pod from config map
+### Using ConfigMap in Container - specific values
 `spec:  
   containers:  
   - env:  
