@@ -40,7 +40,7 @@ The **envFrom** property is used, this is a list, so many configMapRef can be pa
 ```
 envFrom:  
   - configMapRef:  
-    name: <config-map-name>`
+      name: <config-map-name>`
 ```
 
 ### Using ConfigMap in Container - specific values
