@@ -14,11 +14,8 @@ resources:
     memory: "4Gi"
     cpu: 2
 ```
-
-0.1 cpu
-100m
-Minimum is 1m
-
+#### The CPU measurement
+0.1 cpu is 100m. The Minimum is 1m.
 1 count of Cpu == 1 virtual CPU, or 1 virtual Core, or 1 hyperthread, depending on the Cloud provider or OS.
 
 Specify in full bytes or using suffix:
@@ -43,19 +40,20 @@ resources:
 A Cpu limit will never be exceeded, performance will be throttled.
 A memory limit can be exceeded, but if it exceeds constantly the Pod will be terminated (OOM Kill).
 
-
 ### Some rules for CPU
-- If limits are specified, but not limits, then requests are automatically set to the same as limits.
-- Requests and Limits are set, they won't exceed the limits, means that a Pod may have claimed resources it doesn't need, and prevents other Pods using that resource.
-- Requests are set, but not limits, the Pod will be guaranteed its requests amount, but other Pods can use available resources in the Node so a Pod. If not setting limits, you must set requests for all the Pods, to guarantee that the Pod gets some resource.
+- If Limits are specified, but not Requests, then Requests are automatically set to the same as Limits.
+- If Requests and Limits are set, they won't exceed the limits, means that a Pod may have claimed resources it doesn't need, and prevents other Pods using that resource.
+- Requests are set, but not limits, the Pod will be guaranteed its Request amount, but other Pods can use available resources in the Node. If not setting Limits, you must set Requests for all the Pods, to guarantee that the Pod gets some resource.
 
 ### Some rules for Memory
-- If limits, but no requests, requests are set to limits
-- Requests and limits are set, they won't exceed limits
-- Request are set, but not limits, any Pod can consume as much memory as available, once memory is assigned to a Pod, the only way to free it is to kill it.
+- If Limits, but no Requests, Requests are set to Limits.
+- Requests and Limits are set, they won't exceed Limits.
+- Request are set, but not Limits, any Pod can consume as much memory as available, once memory is assigned to a Pod, the only way to free it is to kill it.
 
 ## Limit Ranges
-This is to apply a default at the namespace level, so if you don't specify resources in the Pod, the Pods get assigned the limit range by default:
+Limit Ranges apply a default at the namespace level
+- Enforces the limit on the pods.
+- If you don't specify resources in the Pod, the Pods get assigned the limit range by default.
 
 ```
 apiVersion: v1
@@ -75,8 +73,8 @@ spec:
     type: Container
 ```
 
-max: the maximum **limit** that can be set on a Container
-min: the minumu **request** that can be set on a Container
+- **max**: the maximum **limit** that can be set on a Container
+- **min**: the minumun **request** that can be set on a Container
 
 ```
 apiVersion: v1
@@ -96,7 +94,7 @@ spec:
     type: Container
 ```
 
-The limit constraints are applied on to new Pod created after the limit range is created or updated.
+The limit constraints are applied on to new Pods created after the limit range is created or updated.
 
 ## Resource Quotes
 At a namespace level, limit total cpu and memory resources allowed for all Pods in the namespace.
