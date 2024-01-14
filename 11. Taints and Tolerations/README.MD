@@ -1,12 +1,12 @@
 # Taints and Tolerations
 
-**Taint**
+## Taint
 A Node can have a **taint**. A restriction on what Pods can be deployed on which Nodes.
 With no restrictions, the scheduler can balance the Pods across all Nodes.
 There may be scenarios where you need specific pods on a Node, e.g., they share some specific services or resources.
 
-A **Taint** applied to a Node prevents **all** Pods being assigned to a Node.
-A **Toleration** allows certain Pods to be tolerant of the Taint, so Pods with the toleration can be assigned to the Node with the Taint.
+- A **Taint** applied to a Node prevents **all** Pods being assigned to a Node.
+- A **Toleration** allows certain Pods to be tolerant of the Taint, so Pods with the toleration can be assigned to the Node with the Taint.
 
 `kubectl taint nodes <node-name> key=value:taint-effect`
 
