@@ -42,6 +42,7 @@ spec:
 ## Notes
 A taint doesn't tell the Pod which node to go to (this is Node affinity).
 The Pod with a Toleration can still be scheduled to a Node that doesn't have the Taint, it just is used to prevent Nodes being scheduled to a Pod.
+The **operator**'s allowed are Equal and Exists - Equal matches if the label key=value pair match, Exists just matches if the key exists.
 
 The scheduler doesn't schedule any Pods to the Master node, that is because when the Cluster is created, a Taint is created on the Master Node.
 To see the Master Node taint:

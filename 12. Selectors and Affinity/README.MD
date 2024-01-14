@@ -58,13 +58,13 @@ spec:
             - Medium
 ```
 
-- nodeSelectorTerms is an array, so multiple matches can be set
-- values is an array, so you can add more labels to match to the key, e.g. 
-- operator, is the match type (=), also available, NotIn (!=), Exists (checks the label exists, doesn't compare the values), NotExists, Gt (>), Lt (<) = Gt/Lt compare label as integer.
+- **nodeSelectorTerms** is an array, so multiple matches can be set.
+- **values** is an array, so you can add more labels to match to the key.
+- **operator** is the match type: In (=), NotIn (!=), Exists (checks the label exists, doesn't compare the values), NotExists, Gt (>), Lt (<) = Gt/Lt compare label as integer.
 
 ### Type of Node Affinity 
 
-#### requiredDuringSchedulingIgnoredDuringExecution: 
+#### requiredDuringSchedulingIgnoredDuringExecution
 
 When a pod is scheduled, no matching label means the Scheduler will not schedule the Pod. If a Pod is running and some Node Affinity rule changes the Affinity, the Pod will continue run on the Node.
 
@@ -75,4 +75,4 @@ When a pod is scheduled, no matching label means the Scheduler will ignore node 
 First part of rule applies as above rules, but this rule will evict any Pods running on a Node where a label change impacts the Affinity.
 
 ## Taints and Tolerations vs Selectors and Affinity
-A combination of taints and tolerations and affinity can be used to ensure pods only ever run on the nodes.
+A combination of taints and tolerations and affinity can be used to ensure pods only ever run on the specific nodes.
