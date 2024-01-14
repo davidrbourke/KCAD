@@ -3,10 +3,10 @@
 ## Docker Security
 
 The Docker host has services running, containers running on the host share the same underlying Operating System components. Containers are isolated using namespaces.
-Processes running on the container are run on the host in its own namesapce.
-The container process cannot see other namespaces processes or containers.
-The host can see all processes, included container processes.
-The process IDs will not match when viewed from the host or container.
+Processes running on the container are run on the host in its own namespace.
+- The container process cannot see host processes, or other namespaces processes or containers.
+- The host can see all processes, including container processes.
+- The process IDs will not match when viewed from the host or container.
 
 Docker host has a root and non-root users.
 By default docker runs processes in containers as the **root** user.

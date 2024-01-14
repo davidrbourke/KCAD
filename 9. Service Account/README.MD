@@ -45,7 +45,7 @@ spec:
 
 Changes to the service account will recreate the deployment, restarting the pods.
 
-Use this pod config to prevent mounting the default service account:
+Use this pod config to prevent mounting the default service account (not needed if overriding the default account):
 `automountServiceAccountToken: false``
 
 ### Version changes
