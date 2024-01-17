@@ -25,6 +25,8 @@ Ways to decide an application on a Pod is ready:
 
 ### Http Test
 
+Any HTTP response code >= 200 and < 400 is a success, any other code is an error.
+
 ```
 apiVersion: v1
 kind: Pod
@@ -44,7 +46,15 @@ spec:
         port: 8080
 ```
 
+Other Http Request options can be set:
+- host - default to Pod IP
+- scheme - http/s (skips certificate validation)
+- httpHeaders - to set custom headers
+
+
 ### TCP Test
+
+The TCP test attempts to open a socket on the container at the Port number, if it can establish a connection, it suceeds, otherwise it is a failure.
 
 ```
 readinessProbe:
@@ -55,6 +65,7 @@ readinessProbe:
 ### Exec Command
 
 Some custom command or script can be executed that if it successfully completes, then the application is ready.
+The command succeeds if it returns a 0, any other result is an error.
 
 ```
 readinessProbe:
@@ -64,12 +75,14 @@ readinessProbe:
       - /app/is_ready
 ```
 
-### Initial delay and probe frequency
+### Probe configuration
 
-- **initialDelaySeconds** is how long to wait from the when the Pod is Ready until runnning the readinessProbe test.
-- **periodSeconds** is how long to wait between retries of the test if the first test fails (e.g., because the application is not ready)
+- **initialDelaySeconds** is how long to wait from the when the Pod is Ready until runnning the readinessProbe test, default is 0 seconds, minimum is.
+- **periodSeconds** is how long to wait between retries of the test if the first test fails (e.g., because the application is not ready), default is 10 seconds, minimum is 1.
 - **failureThreshold**, by default the probe will make 3 attempts, the failureThreshold will increase/decrease the number of attempts.
 - **successThreshold**, by default, 1 successful test will result in passing the test, you can require more consequtive successful tests with the success threshold.
+- **timeoutSeconds** is how long before the probe timesout, default is 1 seconds, minimum is 1.
+- **terminationGracePeriodSeconds** is how long to wait before the kubelet triggers a Pod shutdown, default is 30 seconds, minimum is 1.
 
 ```
 readinessProbe:
