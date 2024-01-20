@@ -29,13 +29,13 @@ A Node with K8s configured as a master, watches the Cluster, manages the other N
  - Scheduler
 
 ## Kubectl
-Command line tool to deploy and manage containers in the cluster.
-e.g., kubectl run hello-minikuke
- kubectl cluster-info
- kubectl get nodes
+Command line tool to deploy and manage containers in the cluster. E.g.
+- `kubectl run hello-minikuke`  
+- `kubectl cluster-info`  
+- `kubectl get nodes`  
 
 ### Output formats
--o json
--o name
--o wide
--o yaml
+- -o json
+- -o name
+- -o wide
+- -o yaml
