@@ -41,5 +41,5 @@ A single Pod can have mulitple containers, but usually not containers of the sam
 A helper container might be doing some supporting task, e.g., handling file upload by a user, etc. So when a new application container is created, the helper is also created, the containers in the same pod can share storage space, and communicate with each other via localhost.
 
 The following command created a Pod with an Nginx image pulled from the public docker hub:
-`kubectl run nginx --image nginx`  
-`kubectl get pods`  
+- `kubectl run nginx --image nginx`  
+- `kubectl get pods`  

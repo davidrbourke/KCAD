@@ -36,16 +36,15 @@ Only certain properties can be edited:
 - spec.initContainers[*].image
 - spec.activeDeadlineSeconds
 - spec.tolerations
--spec.terminationGracePeriodSeconds
+- spec.terminationGracePeriodSeconds
 
 `kubectl edit pod <pod-name>`
 
 # Replication Controllers
-To run multiple instances of a Pod, providing Availability, share load (Load Balancing)
-Automatically brings up a new Pod if the existing one fails.
-
-In the replication controller yaml file, the pod definition goes under the template section. Can be copied exactly from a pod definition file, but remove the apiVersion and Kind.
-Number of replicas is set in replicas property of the replication controller.
+- To run multiple instances of a Pod, providing Availability, share load (Load Balancing)
+- Automatically brings up a new Pod if the existing one fails.
+- In the replication controller yaml file, the pod definition goes under the template section. Can be copied exactly from a pod definition file, but remove the apiVersion and Kind.
+- Number of replicas is set in replicas property of the replication controller.
 
 ### Create replicas
 ```

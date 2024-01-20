@@ -26,7 +26,7 @@ A new deployment rollout creates a new deployment revision. This keeps track of 
 See the rollout status of the status:  
 `kubectl rollout status deployment/<deployment-name>`
 
-See the rollout history:
+See the rollout history:  
 `kubectl rollout history deployment/<deployment-name>`  
 
 To see a specific revision:  
@@ -37,7 +37,7 @@ To do a deployment and record the change-case:
 
 
 ## Deployment Strategy
-1. **Recreate** - Destroy all the running instances, then create new instances. During the period before re-deployment, the application is unaccessible.
+1. **Recreate** - Destroy all the running instances, then create new instances. During the period before re-deployment, the application is inaccessible.
 2. **RollingUpdate** - Default - take down an old version and bring up a new version one by one, the deployment is seemless, the application is always available.
 
 A new deployment can be done through updating the deployment definition file.  
@@ -46,7 +46,7 @@ Or, updating the image directly, but this creates a difference between your conf
 
 **--record** flag is used to record the cause of the change for visibility in the rollout history.  
 
-The deployment event history will show if which strategy was used to deploy.  
+The deployment event history will show which strategy was used to deploy.  
 
 For each deployment, a new ReplicaSet is created.  
 
@@ -65,7 +65,7 @@ Tests can be run against the Green/new version.
 Traffic can be switched to the Green/new deployment.
 
 The label on the Blue deployment service, e.g. version: v1, matches the label on the Blue Deployment.
-The Green deployment is deployment, the Green service label points ot the Green deployment labels, e.g. version: v2.
+The Green deployment is deployed, and the Green service label points to the Green deployment labels, e.g. version: v2.
 To switch the routing of the traffic, the Blue deployment service label is updated to version: v2, and traffic switches to the Green/v2 deployment Pods.
 
 #### Blue Deployment
@@ -144,14 +144,14 @@ spec:
 ```
 
 ### Canary Update
-Deploy a new version and route only a small percentage of traffic to the new version.
+Deploy a new version and route only a small percentage of traffic to the new version.  
 Once the testing is complete, route all traffic to the new deployment.
 
 1. Deploy the version 2 Deployment
 2. Setup a common label from the Service to both the new and old deployments, e.g. app: front-end
 3. Reduce the number of Pods in the new/v2 deployment, e.g.:
   - 5 Pods in v1 deployment, 5 pods in v2 deployment - will split load 50/50
-  - 5 Pods in v1 deployment, **1** pods in v2 deployment - will split load 83/17 - 17% of traffic is going to the new deployment
+  - 5 Pods in v1 deployment, **1** pod in v2 deployment - will split load 83/17 - 17% of traffic is going to the new deployment
 4. Once tests are complete, increase the Pods in the v2 deployment, reduce the pods in the v1 deployment down to zero
 
 A Service Mesh like Istio are more specific about Canary deployments, e.g. you could route 1% of traffic.
