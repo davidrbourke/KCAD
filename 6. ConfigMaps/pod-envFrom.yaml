@@ -12,7 +12,7 @@ spec:
     - containerPort: 8080
     envFrom:
     - configMapRef:
-      name: app-config
+      name: webapp-config-map
 
 
 # Not sure the above is correct
