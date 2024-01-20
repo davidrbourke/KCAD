@@ -44,7 +44,7 @@ Run and exits as soon a the process is complete:
   - CMD ["<command>", "<parameter>"]
   - e.g., CMD ["sleep", "5"]
 - ENTRYPOINT command, allows us to specify which command to run when the container starts, any parameters entered into the docker run command with get appended to the ENTRYPOINT command.
-  - ENTRYPOINT ["sleep]
+  - ENTRYPOINT ["sleep"]
 - Run image passing parameter: `docker run <image> 5`  
 
 Use both ENTRYPOINT followed by CMD to set a default, anything provided in the docker run command will overwite the CMD
@@ -55,8 +55,8 @@ Use --entry-point to override the ENTRYPOINT in the dockerfile:
 `dopcker run --entry-point sleep2.0 <image> 10`  
 
 ## Commands and Aruguments in Kubernetes
-args: array - override the docker CMD
-command: array - override the ENTRYPOINT
+- args: array - override the docker CMD
+- command: array - override the ENTRYPOINT
 
 ```
 apiVersion: v1
@@ -72,7 +72,7 @@ spec:
 ```
 
 ### Passing arguments with imperative commands
-Any after a double dash -- will be passed to the image as arguments/CMD, e.g. would pass --color and green  
+Anything after a double dash -- will be passed to the image as arguments/CMD, e.g. would pass --color and green  
 `kubectl run webapp-green --image=kodekloud/webapp-color -- --color green`
 To pass in commands to ENTRYPOINT, use --command, e.g.,  
 `kubectl run webapp-green --image=kodekloud/webapp-color --command python app -- --color green`
@@ -93,7 +93,7 @@ spec:
 
 
 ## Environment Variables
-3 ways to set environment variables in Kubernetes
+3 ways to set environment variables in Kubernetes:  
 1 - In the Pod or Deployment
 ```
 env:

@@ -50,10 +50,9 @@ Use this pod config to prevent mounting the default service account (not needed 
 
 ### Version changes
 - 1.22, the default token associated with the pod (mounted in the pod) when the pod starts became **audience bound**, **object bound** and **time bound**. The TokenRequestAPI was introduced to handle generating the service account token.
-- 1.24, when creating a service account, you now have to explicitly create the token, it doesn't happen automatically. Now you must run these commands:
-`kubectl create serviceaccount <sa-name>`
-
-`kubectl create token <sa-name>`
+- 1.24, when creating a service account, you now have to explicitly create the token, it doesn't happen automatically. Now you must run these commands:  
+  - `kubectl create serviceaccount <sa-name>`  
+  - `kubectl create token <sa-name>`  
 You can also specify the expiry length of the token, otherwise the default is 1hr (e.g., for 10 minutes with argument --duration 10m)
 
 The secret object is associated with the service account using an annotation in the secret:

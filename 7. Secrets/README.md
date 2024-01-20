@@ -10,14 +10,18 @@ Secrets are for sensitive information, they are stored encoded.
 ## Imperative
 
 From-literal:
-`kubectl create secret generic <name> --from-literal=<key>=<value>`
-`kubectl create secret generic db-creds --from-literal=DB_HOST=mysql --from-literal=DB_PASSWORD=pswrd`
+```
+kubectl create secret generic <name> --from-literal=<key>=<value>
+kubectl create secret generic db-creds --from-literal=DB_HOST=mysql --from-literal=DB_PASSWORD=pswrd
+```
 
 From-file:
-`kubectl create secret <name> --from-file=<path-to-file>`
-`kubectl create secret generic --from-file=secrets.properties`
+```
+kubectl create secret generic <name> --from-file=<path-to-file>
+kubectl create secret generic --from-file=secrets.properties
+```
 
-Imperative command will automatically base64 encrypt the secret.
+Imperative command will automatically base64 encode the secret.
 
 ## Declarative
 (See file secret-definition.yaml)
@@ -32,9 +36,11 @@ Key value pairs in secret files must be base64 encoded.
 `echo -n 'bXlzcWw=' | base64 --decode`
 
 ## Secret commands
+```
 kubectl get secrets
 kubectl describe secrets
 kubectl describe secrets <secret-name> -o yaml
+```
 
 ## Using Secrets in a Container
 The **envFrom** property is used, this is a list, so many secretRef can be passed, all the key value pairs in the Secret will get added as ENVironment Variables.
@@ -45,10 +51,10 @@ envFrom:
       name: <secret-name>
 ```
 
-If mounting a file, each key-value pair in the file is mounted as its own file in the /opt/<secret-name>-volumes
-** When I did this in the lab, it load the secrets to the ENVironment Variables, not files - need to double check this **
+If mounting a file, each key-value pair in the file is mounted as its own file in the /opt/<secret-name>-volumes.  
+**When I did this in the lab, it load the secrets to the ENVironment Variables, not files - need to double check this**
 
-### Using ConfigMap in Container - specific values
+### Using Secrets in Container - specific values
 ```
 spec:  
   containers:  
@@ -86,12 +92,12 @@ Secrets in config will still be base64, but it can be encrypted on etcd server.
 Need etcd-client installed to query etcd.
 `apt-get install etcd-client`
 
-### Check if encryption at test is enabled 
+### Check if encryption-at-rest is enabled 
 On the pod:
 
 `ps -auz | grep kube-api | grep "encryption-provider-config"`
 or
-`cat /etc/kubernetes/manifests/kube-apiserver`
+`cat /etc/kubernetes/manifests/kube-apiserver`  
 If enabled there will be a setting for --encryption-provider-config
 
 ### Set encryption at reset
@@ -105,4 +111,4 @@ If enabled there will be a setting for --encryption-provider-config
    - pass the mounted encryption config file to the --encryption-provider-config setting in the kube-apiserver startup command
 kind: EncryptionConfiguration
 
-After encryption is enabled, on new secrets will be encrypted, not existing, so they need to be replaced to be encrypted.
+After encryption is enabled, only new secrets will be encrypted, not existing secrets, so they need to be replaced to be encrypted.

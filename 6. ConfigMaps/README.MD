@@ -14,7 +14,7 @@ kubectl create configmap \
              --from-literal=ANOTHER_APP_COLOR=blue
 ```
 
-**from-literal** is used to specify the key value pairs. **from-file** would be used to provide the key value pairs from a file:
+**--from-literal** is used to specify the key value pairs. **--from-file** would be used to provide the key value pairs from a file:
 ```
 kubectl create configmap \
   <config-name> --from-file=<path-to-file>
@@ -32,8 +32,10 @@ See configmap.yaml.
 Notice that spec is not used, rather the **data** property.
 
 ### Other commands
-`kubectl get configmaps`
-`kubectl describe configmap <name>`
+```
+kubectl get configmaps
+kubectl describe configmap <name>
+```
 
 ## Using ConfigMap in Container - whole file
 The **envFrom** property is used, this is a list, so many configMapRef can be passed, all the key value pairs in the config map will get added as ENVironment Variables.

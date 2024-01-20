@@ -34,7 +34,7 @@ e.g.,
 - For simple scenarios, can only assign Pod to one Node via a label, cannot have more nuanced rules, so instead use Node Affinity.
 
 ## Node Affinity
-Ensures Pods are hosting on particular nodes.
+Ensures Pods are hosted on particular nodes.
 Affinity is more complex - below is the same assignment as the Node Selector above:
 
 ```

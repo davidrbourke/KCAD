@@ -13,7 +13,7 @@ There may be scenarios where you need specific pods on a Node, e.g., they share 
 e.g.
 `kubectl taint nodes node1 app=blue:NoSchedule`
 
-## Taint effects
+### Taint effects
 Defines what happens to the Pods if they do not tolerate the taint:
 - NoSchedule - do not schedule the Pod on the Node
 - PreferNoSchedule - try to avoid placing the Pod on the Node but not guaranteed
@@ -21,6 +21,8 @@ Defines what happens to the Pods if they do not tolerate the taint:
 
 Pod definition for `kubectl taint nodes node1 app=blue:NoSchedule`
 
+## Tolerations
+Applied to the Pod, it allows the Pod to tolerate the Taint on the Node.  
 *All of the toleration values need to be wrapped in double-quotes*
 
 ```

@@ -45,7 +45,7 @@ A sleep command had to be added to prevent a crash loop.
 
 ## Example running a sidecar to forward logs to elastic
 
-Logs from the the 1st container (app) are a volume mount called log-volume - in the /log directory on the container.
+Logs from the the 1st container (app) are written to a volume mount called log-volume - in the /log directory on the container.
 These logs are used by the 2nd container (sidecar) to forward to elastic. The 2nd container also has the log-volume mounted, the path is /var/log/event-simulator/.
 The contexts from the /log directory in container 1, is available in container 2 in the path /var/log/event-simulator/. This is where container 2 is expecting them to forward them to Kibana.
 
