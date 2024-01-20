@@ -59,7 +59,7 @@ spec:
 ```
 
 ## Mount ConfigMap from Volume
-The Config Map data can be mounted from a Volume, if done this way, each key-value pair in the config map gets it's own unique file created into the volume directory, the file name is the *key*, the context of the file is the *value*.
+The Config Map data can be mounted from a Volume, if done this way, each key-value pair in the config map gets it's own unique file created into the volume directory, the file name is the *key*, the content of the file is the *value*.
 
 ### Example - Deployment with mounted volume
 ```
@@ -101,7 +101,6 @@ spec:
       terminationGracePeriodSeconds: 30
 ```
 ### Example - Config Map
-ConfigMap
 ```
 apiVersion: v1
 data:
@@ -112,7 +111,7 @@ metadata:
   name: my-app-config
 ```
 
-### Example - Files loaded into volume
+### Example Directory Structure
 ```
 # cd /etc/config
 # ls
