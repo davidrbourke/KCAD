@@ -88,10 +88,10 @@ spec:
       containers:
         - name: my-nginx
           image: nginx
-replicas: 3
-selector:
-    matchLabels:
-      version: v1
+  replicas: 3
+  selector:
+      matchLabels:
+        version: v1
 ```
 
 #### Service pointing to V1/Blue
@@ -125,10 +125,10 @@ spec:
       containers:
         - name: my-nginx
           image: nginx
-replicas: 3
-selector:
-    matchLabels:
-      version: v2
+  replicas: 3
+  selector:
+      matchLabels:
+        version: v2
 ```
 
 #### Update Service to point to V2/Green
@@ -155,4 +155,130 @@ Once the testing is complete, route all traffic to the new deployment.
 4. Once tests are complete, increase the Pods in the v2 deployment, reduce the pods in the v1 deployment down to zero
 
 A Service Mesh like Istio are more specific about Canary deployments, e.g. you could route 1% of traffic.
+
+## Stateful Sets
+
+Similar to Deployments, create Pods, scale-up/down. But Pods are deployed in a sequential order, the next Pod won't start up until the current one is running. Each Pod get a unique Pod name based on the index of start sequence, there are no random Pod names. E.g., <pod-name>-0, <pod-name>-1, etc.
+
+A scenario where you would need this, if is running a database, e.g. Mongo/mySQl with master-slave configuration. You want the master Pod to start up first, the first slave Pod next, which will clone from master, the second slave next which will clone from slave-1. You also need consistent Pod names (not random suffix), so that you know that master will be <pod-name>-0 always.
+
+```
+apiVersion: apps/v1
+kind: StatefulSets
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  template:
+    metadata:
+      name: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql
+  replicas: 3
+  selector:
+      matchLabels:
+        app: mysql
+  serviceName: mysql-h
+```
+
+### Notes
+- **kind** is **StatefulSet**
+- **serviceName** must be specified with a headless service name
+- to override sequential start of the Pods, use **podManagementPolicy: Parallel**
+
+### Headless service
+To access Pods with a normal Deployment that is scaled up, we would create a Service. Other applications can access the scaled up Pods using the Service, which acts as a Load Balancer, and directs traffic to one of the Pods.
+In the Stateless service example of using a scaled database across multiple Pods, we need to make the MySQl Pods accessible to the applications in the cluster. However, writes should go to only the master Pod (<pod-name>-0), reads could come from any Pods. If we use a standard Service, writes would be Load Balanced to any Pod in the Stateful Sets. A Headless Service allows control of this, to write to only the master Pod. It creates DNS entries for each Pod with the Podname and the index sequence, this allows references to specific Pods from our applications. E.g.:
+
+```
+<pod-name>-<index>.<headless-svc-name>.<namespace>.svc.cluster.local
+mysql-0.mysql-h.default.svc.cluster.local
+mysql-1.mysql-h.default.svc.cluster.local
+mysql-2.mysql-h.default.svc.cluster.local
+```
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-h
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
+  clusterIP: None
+```
+
+Setting **clusterIP: None** is the setting that creates a headless service.  
+
+If using a Deployment, to register multiple DNS A Name records for each Pod in the Deployment, you must then specificy the sub domain and host name to the name of the Service.
+
+```
+subdomain: mysql-h
+hostname: mysql-pod
+```
+
+However in the above scenario, all Pods would get the same A Name record. A Stateful doesn't require you to do this, it automatically create the DNS A Name records with the unique name for each pod: <pod-name>-0, <pod-name>-1... That is why you must specify the serviceName in the Stateful: to link the Pods in the Stateful set to the Service Name, so the headless service creates the unqiue DNS entries for each Pod.
+
+### Storage in Stateful Sets
+By default with Storage Volumes in a Deployment, all pods would use the same Persistent Volume. For Stateful sets, you might want each Pod to have unique storage. Each Pod needs its own Persistent Volume Claim.
+
+Use a Volume Claim Template - simply you would move a standard Persistent Volume Claim file yaml into a section called **volumeClaimTemplates** within the Stateful Set definition:
+
+
+```
+apiVersion: apps/v1
+kind: StatefulSets
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  template:
+    metadata:
+      name: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: data-volume
+  replicas: 3
+  selector:
+      matchLabels:
+        app: mysql
+  serviceName: mysql-h
+  volumeClaimTemplates:
+  - metadata:
+      name: data-volume
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: google-storage
+      resources:
+        requests:
+          strorage: 500Mi
+```
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: google-storage
+provisioner: kubernetes.io/gce-pd
+```
+
+When a Pod is restarted or recreated, it is attached to the same Storage Class as before, so it provide stable storage.
+
+
+
+
+
+
+
 
