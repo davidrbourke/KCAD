@@ -97,7 +97,7 @@ On the pod:
 
 `ps -auz | grep kube-api | grep "encryption-provider-config"`
 or
-`cat /etc/kubernetes/manifests/kube-apiserver`  
+`cat /etc/kubernetes/manifests/kube-apiserver.yaml`  
 If enabled there will be a setting for --encryption-provider-config
 
 ### Set encryption at reset
