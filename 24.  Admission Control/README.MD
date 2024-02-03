@@ -14,11 +14,12 @@ Admission Controllers help to enforce how a cluster is used:
 - Always pulls images
 - Default storage class, automatically adds PVC to any Pods that doesn't request any.
 - Event rate limit, to prevent API server overload
-- Namespace exists, won't create a Pod is the namespace doesn't exist (enabled by default)
+- Namespace exists, won't create a Pod if the namespace doesn't exist (enabled by default)
 - Namespace autoprovision controller, will automatically create the namespace if it doesn't exist (not default)
 
 
 ## Check which Controllers are enabled
+Check the --enable-admission-plugins setting in /etc/kubernetes/manifests/kube-apiserver.yaml, or:
 ```
 kube-apiserver -h | grep enable-admission-plugins
 
@@ -27,17 +28,17 @@ ps -ef | grep kube-apiserver | grep admission-plugins
 ```
 
 ## To enable Controllers
-Update the /etc/kubernetes/manifests/kube-apiserver.yaml --enable-admission-plugins=<controller> configuration.  
-E.g., --enable-admission-plugins=NodeRestriction,NamespaceAutoProvision
+Update the /etc/kubernetes/manifests/kube-apiserver.yaml `--enable-admission-plugins=<controller>` configuration.  
+E.g., `--enable-admission-plugins=NodeRestriction,NamespaceAutoProvision`
 
 ## To disable Controllers
---disable-admission-plugins=NodeRestriction=NodespaceAutoProvision  
+`--disable-admission-plugins=NodeRestriction=NodespaceAutoProvision`
 
-**NamespaceAutoProvision (depricated) is now replace by NamespaceLifecycle admissions controller.***  
+**NamespaceAutoProvision (depricated) is now replace by NamespaceLifecycle admissions controller.**
 
-The NamespaceLifecycle admission controller will make sure that requests to a non-existent namespace is rejected and that the default namespaces such as default, kube-system and kube-public cannot be deleted.
+The NamespaceLifecycle admission controller will make sure that requests to a non-existent namespace are rejected and that the default namespaces such as default, kube-system and kube-public cannot be deleted.
 
-To get a list of the default Admission Controller enabled for a Pod, connects to the kube-apiserver Pod:
+To get a list of the default Admission Controller enabled for a Pod, connect to the kube-apiserver-controlplane Pod:
 ```
 kubectl exec -it kube-apiserver-controlplane -n kube-system -- kube-apiserver -h | grep 'enable-admission-plugins'
 ```
@@ -47,8 +48,7 @@ kubectl exec -it kube-apiserver-controlplane -n kube-system -- kube-apiserver -h
 The Namespace exists admission controller is a **validating** controller.  
 DefaultStorageClass is a **mutating** controller, it will watch for a creating Pod and modifiy the request to add a default storage class to a request if it is missing from the Pod definition.  It can change or mutate the object before it is created.
 
-The mutation controller runs first, as then they can be validated afters, including the mutated changes.  
-
+The mutation controller runs first, as then the configuration can be validated after, including the mutated changes.  
 If any admission controller rejects the request, the Pod creation is rejected.
 
 ### Custom Admission Controller
@@ -57,7 +57,21 @@ Types:
 - Mutation admission webhook
 - Validating admission webhook
 
-Can point these controllers to our own server running code and logic, the webhook send an admission review request to your server, and receives back an admission review response object. If the allowed field in the response is true, the admission is accepted, otherwise if false, it is rejected.
+Can point these controllers to our own server running code and logic, the webhook sends an admission review request to your server, and receives back an admission review response object. If the **allowed** field in the response is true, the admission is accepted, otherwise if false, it is rejected.  
+
+Example JSON response:
+```
+{
+  "apiVersion": "admission.k8s.io/v1",
+  "kind": "AdmissionReview",
+  "response": {
+    "uid": "<value from request.uid>",
+    "allowed": true,
+    "patchType": "JSONPatch",
+    "patch": "W3sib3AiOiAiYWRkIiwgInBhdGgiOiAiL3NwZWMvcmVwbGljYXMiLCAidmFsdWUiOiAzfV0="
+  }
+}
+```
 
 #### Steps to setup
 1. Create the code for handling the request/response, e.g., in Go to handle the request and return a response. The response has to return the allowed field, and can return a  patch field (using Json patch) to alter the Pod/deployment configuration.
