@@ -30,3 +30,10 @@ Create a pod and expose a service
 `kubectl expose pod httpd --name httpd --port=80 --type=ClusterIP --dry-run=client -o yaml`
 Or in one command
 `kubectl run httpd --image=httpd:alpine --port=80 --expose=true`
+
+## Count of line:
+Use pipe wc -l  
+This count will include any headers so -1  
+```
+kubectl get clusterroles | wc -l
+```
