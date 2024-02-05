@@ -37,3 +37,10 @@ This count will include any headers so -1
 ```
 kubectl get clusterroles | wc -l
 ```
+
+## Identify the OS
+```
+cat /etc/os-release
+cat /etc/*release*
+```
+
