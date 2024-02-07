@@ -1,13 +1,12 @@
 # Deployments
 
-Allows for production deployment, a high level object above ReplicaSet and Pods
+Allows for production deployment, a high level object above ReplicaSet and Pods. Features:
 - rolling updates
 - rolling back changes to a previous deployment
 - scaling
 - modifying resource allocations to all pods
 
 Similar to ReplicaSet file, but with different Kind: Deployment.
-
 
 ## Commands
 `kubectl create -f deployment.yml`
@@ -60,13 +59,13 @@ To rollback to a specific revision:
 ## Blue/Green and Cannary Deployment
 
 ### Blue/Green
-Both new and old version are deployed, 100% of traffic routes to Blue/old version.
-Tests can be run against the Green/new version.
-Traffic can be switched to the Green/new deployment.
+Both new and old version are deployed, 100% of traffic routes to Blue/old version.  
+Tests can be run against the Green/new version.  
+Traffic can be switched to the Green/new deployment.  
 
-The label on the Blue deployment service, e.g. version: v1, matches the label on the Blue Deployment.
-The Green deployment is deployed, and the Green service label points to the Green deployment labels, e.g. version: v2.
-To switch the routing of the traffic, the Blue deployment service label is updated to version: v2, and traffic switches to the Green/v2 deployment Pods.
+The label on the Blue deployment service, e.g. version: v1, matches the label on the Blue Deployment.  
+The Green deployment is deployed, and the Green service label points to the Green deployment labels, e.g. version: v2.  
+To switch the routing of the traffic, the Blue deployment service label is updated to version: v2, and traffic switches to the Green/v2 deployment Pods.  
 
 #### Blue Deployment
 
@@ -145,7 +144,7 @@ spec:
 
 ### Canary Update
 Deploy a new version and route only a small percentage of traffic to the new version.  
-Once the testing is complete, route all traffic to the new deployment.
+Once the testing is complete, route all traffic to the new deployment.  
 
 1. Deploy the version 2 Deployment
 2. Setup a common label from the Service to both the new and old deployments, e.g. app: front-end
@@ -154,13 +153,13 @@ Once the testing is complete, route all traffic to the new deployment.
   - 5 Pods in v1 deployment, **1** pod in v2 deployment - will split load 83/17 - 17% of traffic is going to the new deployment
 4. Once tests are complete, increase the Pods in the v2 deployment, reduce the pods in the v1 deployment down to zero
 
-A Service Mesh like Istio are more specific about Canary deployments, e.g. you could route 1% of traffic.
+A Service Mesh like Istio is more specific about Canary deployments, e.g. you could route 1% of traffic.
 
 ## Stateful Sets
 
-Similar to Deployments, create Pods, scale-up/down. But Pods are deployed in a sequential order, the next Pod won't start up until the current one is running. Each Pod get a unique Pod name based on the index of start sequence, there are no random Pod names. E.g., <pod-name>-0, <pod-name>-1, etc.
+Similar to Deployments, it creates Pods, scale-up/down. But Pods are deployed in a **sequential order**, the next Pod won't start up until the current one is running. Each Pod gets a unique Pod name based on the index of the start sequence, there are no random Pod names. E.g., `<pod-name>-0`, `<pod-name>-1`, etc.
 
-A scenario where you would need this, if is running a database, e.g. Mongo/mySQl with master-slave configuration. You want the master Pod to start up first, the first slave Pod next, which will clone from master, the second slave next which will clone from slave-1. You also need consistent Pod names (not random suffix), so that you know that master will be <pod-name>-0 always.
+A scenario where you would need this, if running a database, e.g. Mongo/mySQL with a master-slave configuration. You want the master Pod to start up first, the first slave Pod next, which will clone from master, the second slave next which will clone from slave-1. You also need consistent Pod names (not random suffix), so that you know that master will be `<pod-name>-0` always.
 
 ```
 apiVersion: apps/v1
@@ -191,7 +190,7 @@ spec:
 
 ### Headless service
 To access Pods with a normal Deployment that is scaled up, we would create a Service. Other applications can access the scaled up Pods using the Service, which acts as a Load Balancer, and directs traffic to one of the Pods.
-In the Stateless service example of using a scaled database across multiple Pods, we need to make the MySQl Pods accessible to the applications in the cluster. However, writes should go to only the master Pod (<pod-name>-0), reads could come from any Pods. If we use a standard Service, writes would be Load Balanced to any Pod in the Stateful Sets. A Headless Service allows control of this, to write to only the master Pod. It creates DNS entries for each Pod with the Podname and the index sequence, this allows references to specific Pods from our applications. E.g.:
+In the Stateless service example of using a scaled database across multiple Pods, we need to make the MySQL Pods accessible to the applications in the cluster. However, writes should go to only the master Pod (`<pod-name>-0`), reads could come from any Pods. If we use a standard Service, writes would be Load Balanced to any Pod in the Stateful Sets. A Headless Service allows control of this, to write to only the master Pod. It creates DNS entries for each Pod with the Podname and the index sequence, this allows references to specific Pods from our applications. E.g.:
 
 ```
 <pod-name>-<index>.<headless-svc-name>.<namespace>.svc.cluster.local
@@ -222,13 +221,12 @@ subdomain: mysql-h
 hostname: mysql-pod
 ```
 
-However in the above scenario, all Pods would get the same A Name record. A Stateful doesn't require you to do this, it automatically create the DNS A Name records with the unique name for each pod: <pod-name>-0, <pod-name>-1... That is why you must specify the serviceName in the Stateful: to link the Pods in the Stateful set to the Service Name, so the headless service creates the unqiue DNS entries for each Pod.
+However in the above scenario, all Pods would get the same A Name record. A Stateful doesn't require you to do this, it automatically creates the DNS A Name records with the unique name for each pod: `<pod-name>-0`, `<pod-name>-1`, etc. That is why you must specify the serviceName in the Stateful: to link the Pods in the Stateful set to the Service Name, so the headless service creates the unqiue DNS entries for each Pod.
 
 ### Storage in Stateful Sets
 By default with Storage Volumes in a Deployment, all pods would use the same Persistent Volume. For Stateful sets, you might want each Pod to have unique storage. Each Pod needs its own Persistent Volume Claim.
 
 Use a Volume Claim Template - simply you would move a standard Persistent Volume Claim file yaml into a section called **volumeClaimTemplates** within the Stateful Set definition:
-
 
 ```
 apiVersion: apps/v1
@@ -273,12 +271,4 @@ metadata:
 provisioner: kubernetes.io/gce-pd
 ```
 
-When a Pod is restarted or recreated, it is attached to the same Storage Class as before, so it provide stable storage.
-
-
-
-
-
-
-
-
+When a Pod is restarted or recreated, it is attached to the same Storage Class as before, so it provides stable storage.

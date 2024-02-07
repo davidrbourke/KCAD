@@ -1,6 +1,6 @@
 # Namespaces
-Namespaces provide isolation. A 'default' namespace is setup automatically
-Some internal namespaces are setup by K8s also, e.g.,
+Namespaces provide isolation. A 'default' namespace is setup automatically.  
+Some internal namespaces are setup by K8s also, e.g., 
 
 ```
 NAME              STATUS   AGE
@@ -50,14 +50,15 @@ Or with command:
 ### Get objects within a namespace
 ```
 kubectl get pods --namespace=dev
+kubectl get pods -n=dev
 kubectl get pods (Uses default namespace)
 kubectl get pods --all-namespaces
 kubectl get pods -A
 ```
 
 ### Set current context namespace
-So you don't have to specify the namespace with each command
-`kubectl config set-context $(kubectl config current-context) --namespace=dev`
+So you don't have to specify the namespace with each command:  
+`kubectl config set-context $(kubectl config current-context) --namespace=dev`  
 
 ## Resource Quota
 See the yaml file:
