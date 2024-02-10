@@ -19,7 +19,7 @@ The token, stored as a secret object is used by the service account for authenti
 
 `kubectl get serviceaccount`
 
-To see the token:
+To see the token:  
 `kubectl describe secret <token-secret-name>`
 
 The token can be used as a REST Bearer token in an authorisation header to the kubernetes API.
@@ -45,8 +45,8 @@ spec:
 
 Changes to the service account will recreate the deployment, restarting the pods.
 
-Use this pod config to prevent mounting the default service account (not needed if overriding the default account):
-`automountServiceAccountToken: false``
+Use this pod config to prevent mounting the default service account (not needed if overriding the default account):  
+`automountServiceAccountToken: false`
 
 ### Version changes
 - 1.22, the default token associated with the pod (mounted in the pod) when the pod starts became **audience bound**, **object bound** and **time bound**. The TokenRequestAPI was introduced to handle generating the service account token.

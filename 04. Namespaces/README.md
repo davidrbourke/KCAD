@@ -47,6 +47,13 @@ Use a namespace definition file:
 Or with command:  
 `kubectl create namespace dev`  
 
+```
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+```
+
 ### Get objects within a namespace
 ```
 kubectl get pods --namespace=dev
@@ -63,3 +70,18 @@ So you don't have to specify the namespace with each command:
 ## Resource Quota
 See the yaml file:
 `kubectl create -f compute-quota.yml`
+
+```
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-quota
+  namespace: dev
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "2"
+    requests.memory: "1Gi"
+    limits.cpu: "4"
+    limits.memory: "2Gi"
+```

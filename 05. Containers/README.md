@@ -38,23 +38,30 @@ To find underlying OS, run the image, then `cat /etc/os-release`
 
 Run and exits as soon a the process is complete:  
 
-`docker run <image>`   
+`docker run <image>`  
 
-- CMD [] defines the command that runs when the image starts
-  - CMD ["<command>", "<parameter>"]
-  - e.g., CMD ["sleep", "5"]
-- ENTRYPOINT command, allows us to specify which command to run when the container starts, any parameters entered into the docker run command with get appended to the ENTRYPOINT command.
+## ENTRYPOINT and CMD defaults
+
+- ENTRYPOINT command, specifies the default process that is executed when your container starts:
   - ENTRYPOINT ["sleep"]
+- CMD [] defines the arguments that get passed to the ENTRYPOINT process (note: if ENTRYPOINT is not set, then defaults to the shell):
+  - CMD ["<command>", "<parameter>"]
+  - CMD ["sleep", "5"]
+  - If ENTRYPOINT ["sleep] & CMD ["5"], then the container will run `sleep 5`
+
+## Override CMD when running the container
 - Run image passing parameter: `docker run <image> 5`  
 
-Use both ENTRYPOINT followed by CMD to set a default, anything provided in the docker run command will overwite the CMD
+Use both ENTRYPOINT followed by CMD to set a default, anything provided in the docker run command will overwite the CMD:
 - ENTRYPOINT ["sleep]
 - CMD ["5"]
 
+## Override ENTRYPOINT when running the container
 Use --entry-point to override the ENTRYPOINT in the dockerfile:  
-`dopcker run --entry-point sleep2.0 <image> 10`  
+`docker run --entry-point sleep2.0 <image> 10`  
 
-## Commands and Aruguments in Kubernetes
+## Commands and Arguments in Kubernetes
+*Note: as this is confusing, command in Kubernetes definition is not CMD in the Dockerfile, command == ENTRYPOINT*  
 - args: array - override the docker CMD
 - command: array - override the ENTRYPOINT
 
@@ -68,11 +75,11 @@ spec:
     - name: ubuntu-sleeper
       image: ubuntu-sleeper
       args: ["5"]
-      command: ["sleep2.0]
+      command: ["sleep2.0"]
 ```
 
 ### Passing arguments with imperative commands
-Anything after a double dash -- will be passed to the image as arguments/CMD, e.g. would pass --color and green  
+Anything after a double dash -- will be passed to the image as args/CMD, e.g. below example would pass `--color` and `green`:  
 `kubectl run webapp-green --image=kodekloud/webapp-color -- --color green`
 To pass in commands to ENTRYPOINT, use --command, e.g.,  
 `kubectl run webapp-green --image=kodekloud/webapp-color --command python app -- --color green`

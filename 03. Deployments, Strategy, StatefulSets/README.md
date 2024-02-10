@@ -11,6 +11,31 @@ Similar to ReplicaSet file, but with different Kind: Deployment.
 ## Commands
 `kubectl create -f deployment.yml`
 
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+    type: frontend
+spec:
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: frontend
+    spec:
+      containers:
+        - name: my-nginx
+          image: nginx
+replicas: 3
+selector:
+    matchLabels:
+      type: frontend
+```
+
 `kubectl get deployments`
 
 ### Get all created resources
