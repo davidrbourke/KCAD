@@ -1,22 +1,20 @@
 # Ingress
 
-- Ingress makes you application externally accessible using a single accessible URL.  
+- Ingress makes an application externally accessible using a single accessible URL.  
 - You can configure routing to different services using a simple URL path in the Ingress.  
 - You can implement SSL security.  
 
 Still need to publish the Ingress as a Node Port or Load Balancer, but only need to do it once.
-
 
 1. Ingress Controller -  First deploy a supported solution, e.g. Nginx, Haproxy, traefik, GCP Httpts/GCE Loadbalancer
 2. Ingress Resources -  Specify a set of rules
 
 Cluster does not come with a Ingress Controller by default.
 
-
 ## Ingress Controller
-Has a definition template.
-E.g. nginx-ingress-controller. 
-https://kubernetes.github.io/ingress-nginx/deploy/
+Has a definition template.  
+E.g. nginx-ingress-controller.  
+https://kubernetes.github.io/ingress-nginx/deploy/  
 
 A Node Port service has to be created to expose the Ingress Controller externally.  
 
@@ -34,7 +32,7 @@ metadata:
 spec:
   backend:
     serviceName: wear-service
-    serivcePort: 80
+    servicePort: 80
 ```
 
 ### Routing with conditions on paths
@@ -91,7 +89,7 @@ kubectl create ingress ingress-pay -n critical-space --rule="/pay=pay-service:82
 
 ### Annotations
 Annotations on the Ingress can be used to alter the rules, e.g. the ingress routes the path /pay to a the pay-service (in the imperative command above).
-However, what is the application doesn't have a /pay? And /pay should route to the home url? Use an annotation rewrite:  
+However, what if the application doesn't have a /pay? And /pay should route to the home url? Use an annotation rewrite:  
 ```
 apiVersion: extensions/v1beta1
 kind: Ingress

@@ -77,7 +77,7 @@ To see the cronjobs:
 `kubectl get cronjob`  
 
 ### Job retrying
-By default there are 6 retries (default backoffLimit), you can configure this with the backoff limit. The restartPolicy is set to **Never*8, so the Pod will not try to restart on Failure, but the Job will try again.
+By default there are 6 retries (default backoffLimit), you can configure this with the backoff limit. The restartPolicy is set to **Never**, so the Pod will not try to restart on Failure, but the Job will try again.
 
 ```
 apiVersion: batch/v1

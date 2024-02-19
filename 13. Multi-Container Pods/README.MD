@@ -1,10 +1,8 @@
 # Multi-Container Pods
 
-Sometimes you need multiple services to work together, that can scale together.
-Multi-container Pods are created and destroyed together, they have access to the same resources and Storage Volume.
-
-In the Pod definition, the containers property is an array - to add mulitple containers.
-
+Sometimes you need multiple services to work together, that can scale together.  
+Multi-container Pods are created and destroyed together, they have access to the same resources and Storage Volume.  
+In the Pod definition, the containers property is an array - to add mulitple containers.  
 
 ## Patterns
 ### Sidecar
@@ -18,7 +16,6 @@ Example: Adapter container processes the logs to a correct format before sending
 ### Ambassador
 Ambassador pattern is a way to connect a Pod with the outside world, essentially a proxy to connect with outside services as if they are running on localhost.
 Example: A different database for different environments, (e.g., dev, test, prod). The Ambassador Pod is responsible for which database is connected to, the main application Container is just accessing the database on the localhost, the Ambassador container is then proxying the request to the right database.
-
 
 ## Simple example running 2 containers
 
@@ -47,7 +44,7 @@ A sleep command had to be added to prevent a crash loop.
 
 Logs from the the 1st container (app) are written to a volume mount called log-volume - in the /log directory on the container.
 These logs are used by the 2nd container (sidecar) to forward to elastic. The 2nd container also has the log-volume mounted, the path is /var/log/event-simulator/.
-The contexts from the /log directory in container 1, is available in container 2 in the path /var/log/event-simulator/. This is where container 2 is expecting them to forward them to Kibana.
+The content from the /log directory in container 1, is available in container 2 in the path /var/log/event-simulator/. This is where container 2 is expecting them to forward them to Kibana.
 
 ```
 apiVersion: v1
@@ -126,8 +123,7 @@ spec:
 
 ## Init Containers
 
-Multi-container pods run for the lifecycle of the container. In some scenarios, an additional container may only need to run at startup, e.g., to load secrets from a vault.
-For this, there are initContainers. There can be multiple initContainers, they run sequentially, one at a time, and are terminated on completion. If an initContainer fails, the Pod will restart until it succeeds. The containers will not start running until the initContainers have completed.
+Multi-container pods run for the lifecycle of the container. In some scenarios, an additional container may only need to run at startup, e.g., to load secrets from a vault. For this, there are initContainers. There can be multiple initContainers, they run sequentially, one at a time, and are terminated on completion. If an initContainer fails, the Pod will restart until it succeeds. The containers will not start running until the initContainers have completed.
 
 ```
 apiVersion: v1
@@ -149,4 +145,3 @@ spec:
     image: busybox:1.28
     command: ['sh', '-c', 'until nslookup mydb; do echo waiting for mydb; sleep 2; done;']
 ```
-

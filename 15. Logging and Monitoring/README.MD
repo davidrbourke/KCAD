@@ -19,11 +19,7 @@ Node level & Pod level
 Kubernetes doesn't come with a built in solution.
 Need to use other 3rd party tools, such a Metrics Server, Prometheus, Datadog, Elastic, etc.
 
-Metrics Server is slimmed down version of Heapster
-
-It records basic metrics, and stores them in the memory - you cannot see historic performance data.
-
-Kubernetes runs a kubelet on each Node, the kubelet contains a sub-component, the cAdvisor to make metrics available to the kubelet.
+Metrics Server is slimmed down version of Heapster. It records basic metrics, and stores them in the memory - you cannot see historic performance data. Kubernetes runs a kubelet on each Node, the kubelet contains a sub-component, the cAdvisor to make metrics available to the kubelet.
 
 To deploy, clone the Metrics Server deployment files github repository and deploy the components.
 
@@ -40,4 +36,3 @@ View metrics of nodes
 
 View metrics of pods
 `kubectl top pod`
-

@@ -1,9 +1,9 @@
 # Taints and Tolerations
 
 ## Taint
-A Node can have a **taint**. A restriction on what Pods can be deployed on which Nodes.
-With no restrictions, the scheduler can balance the Pods across all Nodes.
-There may be scenarios where you need specific pods on a Node, e.g., they share some specific services or resources.
+A Node can have a **taint**. A restriction on what Pods can be deployed on which Nodes.  
+With no restrictions, the scheduler can balance the Pods across all Nodes.  
+There may be scenarios where you need specific pods on a Node, e.g., they share some specific services or resources.  
 
 - A **Taint** applied to a Node prevents **all** Pods being assigned to a Node.
 - A **Toleration** allows certain Pods to be tolerant of the Taint, so Pods with the toleration can be assigned to the Node with the Taint.
@@ -15,16 +15,15 @@ e.g.
 
 ### Taint effects
 Defines what happens to the Pods if they do not tolerate the taint:
-- NoSchedule - do not schedule the Pod on the Node
-- PreferNoSchedule - try to avoid placing the Pod on the Node but not guaranteed
-- NoExecute - no new Pods will applied to the Nodes, and existing Pods on the Node that do not tolerate the taint will be evicted.
-
-Pod definition for `kubectl taint nodes node1 app=blue:NoSchedule`
+- **NoSchedule** - do not schedule the Pod on the Node
+- **PreferNoSchedule** - try to avoid placing the Pod on the Node but not guaranteed
+- **NoExecute** - no new Pods will applied to the Node, and existing Pods on the Node that do not tolerate the taint will be evicted.
 
 ## Tolerations
 Applied to the Pod, it allows the Pod to tolerate the Taint on the Node.  
-*All of the toleration values need to be wrapped in double-quotes*
+*All of the toleration values need to be wrapped in double-quotes* (I don't think this is correct for v1.28).
 
+Pod definition for `kubectl taint nodes node1 app=blue:NoSchedule`:
 ```
 apiVersion: v1
 kind: Pod
@@ -44,7 +43,9 @@ spec:
 ## Notes
 A taint doesn't tell the Pod which node to go to (this is Node affinity).
 The Pod with a Toleration can still be scheduled to a Node that doesn't have the Taint, it just is used to prevent Nodes being scheduled to a Pod.
-The **operator**'s allowed are Equal and Exists - Equal matches if the label key=value pair match, Exists just matches if the key exists.
+The **operators** allowed are **Equal** and **Exists**:
+- Equal matches if the label key=value pair match
+- Exists just matches if the key exists
 
 The scheduler doesn't schedule any Pods to the Master node, that is because when the Cluster is created, a Taint is created on the Master Node.
 To see the Master Node taint:

@@ -7,16 +7,16 @@ It considers the resources required by the Pod and identifies the best Node with
 ### Requests
 The minimum amount of resources required, the guaranteed amount the Pod will get:
 
-
 ```
 resources:
   requests:
     memory: "4Gi"
     cpu: 2
 ```
+
 #### The CPU measurement
-0.1 cpu is 100m. The Minimum is 1m.
-1 count of Cpu == 1 virtual CPU, or 1 virtual Core, or 1 hyperthread, depending on the Cloud provider or OS.
+- 0.1 cpu is 100m. The Minimum is 1m.
+- 1 count of Cpu == 1 virtual CPU, or 1 virtual Core, or 1 hyperthread, depending on the Cloud provider or OS.
 
 Specify in full bytes or using suffix:
 - 1 G (Gigabyte) = 1,000,000,000 bytes
@@ -96,12 +96,12 @@ spec:
 
 The limit constraints are applied on to new Pods created after the limit range is created or updated.
 
-## Resource Quotes
+## Resource Quotas
 At a namespace level, limit total cpu and memory resources allowed for all Pods in the namespace.
 
 ```
 apiVersion: v1
-kind: ResourceQuote
+kind: ResourceQuota
 metadata:
   name: my-resource-quota
 spec:
@@ -111,3 +111,8 @@ spec:
     limits.cpu: 10
     limits.memory: 10Gi
 ```
+
+Create it with a namespace to apply the resource quota to a specific namespace:  
+`kubectl apply -f <resource-quote-definition>.yaml --namespace=<namespace-name>`  
+
+There are also various selectors that can be used to apply the resource limit across custom labels.  

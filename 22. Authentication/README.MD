@@ -67,10 +67,10 @@ Move this configuration to kube config file, and specify the file options in the
 ### KubeConfig Format
 - Clusters
   - The clusters you need access to, e.g., dev, test, prod
-  - This has the --server specification from the Kubectl command above.
+  - This has the --server specification and --certificate-authority from the Kubectl command above.
 - Users
   - User accounts you use to access the cluster, users may have different priviledges
-  - This has the --client-key, --client-certificate, --certificate-authority from the Kubectl command above.
+  - This has the --client-key and --client-certificate from the Kubectl command above.
 - Contexts 
   - Which Users to use for which Clusters
 
@@ -106,7 +106,7 @@ users:
 Set the default context: see the **current-context** section at the top. Also can use the command line:
 ```
 kubectl config view
-kubectl config view --kubeconfig=my-custom-confing # this is it not using the default config file $HOME/.kube/config.
+kubectl config view --kubeconfig=my-custom-config # this is it not using the default config file $HOME/.kube/config.
 kubectl config use-context <context-name>
 kubectl get config current-context
 ```

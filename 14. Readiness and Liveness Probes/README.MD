@@ -89,14 +89,14 @@ readinessProbe:
   httpGet:
     path: /api/ready
     port: 8080
-initialDelaySeconds: 10
-periodSeconds: 5
-failureThreshold: 8
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  failureThreshold: 8
 ```
 
 ## Liveness Probes
 
-Kubernetes will restart a crashed container automatically. However, if the application is not really working, but the container is still running, Kubernetes assumes the application is up as the container is still running. Traffic will still be routed. A Liveness Probe will test if the application is actually healthy. If the Liveness Probe finds an unhealth application, it will restart a Pod and traffic will not be routed to it until it is up and running again.
+Kubernetes will restart a crashed container automatically. However, if the application is not really working, but the container is still running, Kubernetes assumes the application is up as the container is still running. Traffic will still be routed. A Liveness Probe will test if the application is actually healthy. If the Liveness Probe finds an unhealthy application, it will restart a Pod and traffic will not be routed to it until it is up and running again.
 
 ### Http Test
 

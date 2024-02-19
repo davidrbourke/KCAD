@@ -1,15 +1,14 @@
 # Labels, Selectors and Annotations
 
-Labels and Selectors are a way to group things together, e.g., a class or kind.
-You want to be able to filter them on criteria or multiple criteria.
+Labels and Selectors are a way to group things together, e.g., a class or kind. You want to be able to filter them on criteria or multiple criteria.
 
 - **Labels** are properties attached to each item.
 - **Selectors** help you filter these items.
 
-In Kubernetes a lot of different objects are created, Pods, Services, Deployments.
+In Kubernetes a lot of different objects are created, Pods, Services, Deployments.  
 You can group and select objects using labels and selectors in different ways, e.g. App, Function, etc.
 
-Specify labels in the Definition file under metadata:
+Specify labels in the Definition file under metadata, labels are case-sensitive:
 
 ```
 apiVersion: v1

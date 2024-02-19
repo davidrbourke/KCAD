@@ -4,16 +4,17 @@ Services enable connectivity between services within and outside the Cluster.
 - Enable Frontend -> Backend
 - Enable External -> Frontend
 
-A Node has an IP Address  (192.168.1.2)  
-The internet Pod network has a range (10.244.0.0)  
-The Pod has an IP from within the range (10.244.0.2)  
+## IPs
+- A Node has an IP Address  (192.168.1.2)  
+- The internet Pod network has a range (10.244.0.0)  
+- The Pod has an IP from within the range (10.244.0.2)  
 
 You cannnot access the Pod via the internal IP address externally, but you could from the Node itself.  
 
-Something in the middle needs to map an external connection to the Pod. The Kubernetes Service does this. 
+Something in the middle needs to map an external connection to the Pod. The Kubernetes Service does this.  
 
 ## Types of Service
-1. **Node Port** listens to a Port on the Node and Forwards a Request to a Port on the Pod running a web application.  
+1. **Node Port** listens to a Port on the Node and Forwards a Request to a Port on the Pod running a web application.
 2. **Cluster IP** the Service creates a virtual IP in the cluster to enable communication between different services.
 3. **Load Balancer** creates a load balancer in supported cloud providers to distribute load in your cluster.
 

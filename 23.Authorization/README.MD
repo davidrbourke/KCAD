@@ -32,7 +32,7 @@ Or using kubectl
 kubectl proxy
 ```
 
-Each API (/api/v1 or /apis/v1) has resources, and each resources has Verbs for actions on the resource. This pattern can be used to control access to various resources and verbs, e.g.:
+Each API (/api/v1 or /apis/v1) has resources, and each resource has Verbs for actions on the resource. This pattern can be used to control access to various resources and verbs, e.g.:
 - /apps/v1/deployments (list, get, create, delete, update, watch)
 - /apps/v1/replicasets
 - /apps/v1/statefulsets
@@ -41,11 +41,11 @@ Each API (/api/v1 or /apis/v1) has resources, and each resources has Verbs for a
 
 ### Authorization in the Cluster
 - Node Authorizer
- - This controls the access within the cluster for the Kubelet to read/write information regarding the Pod.
-- ABAC
+  - This controls the access within the cluster for the Kubelet to read/write information regarding the Pod.
+- ABAC - Attribute Based Access Control
   - A Policy definition can be created for each group or user
   - Everytime you need to change the Access Control on the cluster, you edit the Policies and restart the Server, so are difficult to manage
-- RBAC
+- RBAC - Role Based Access Control
   - Define a Role, e.g., for Developers, then associate the Developers to the Role.
   - A change to the Access Control requires changing the Role and its permissions are applied immediately
 - Webhook
@@ -123,7 +123,7 @@ kubectl auth can-i delete nodes --as dev-user
 kubectl auth can-i delete nodes --as dev-user --namespace somenamespace
 ```
 
-To limit to a Rule to a specific resource, e.g. Pod, using resourceNames: [<podname>]
+To limit a Rule to a specific resource, e.g. Pod, using resourceNames: [<podname>]
 ```
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role

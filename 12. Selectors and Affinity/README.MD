@@ -1,12 +1,13 @@
 # Selectors and Affinity
 
-## Node Selectors
+May wish to assign certain Pods to certain Nodes, e.g., a Node may have more resources.  
+By default, a Pod can be scheduled on any Node.  
 
-May wish to assign certain Pods to certain Nodes, e.g., a Node may have more resources.
-By default, a Pod can be scheduled on any Node.
-
-There are two ways to limit a Pods to a Node.
+There are two ways to limit a Pods to a Node.  
 - Node Selectors (easiest way)
+- Node Affinity
+
+## Node Selectors
 
 ```
 apiVersion: v1
@@ -21,14 +22,14 @@ spec:
     size: Large
 ```
 
-`size: Large` is a key=value pair label and selectors.
-The Nodes must be labelled prior to creating the Pod.
+`size: Large` is a key=value pair label and selectors.  
+The Nodes must be labelled prior to creating the Pod.  
 
-Command to label a node:
-`kubectl label nodes <node-name> <label-key>=<label-value>`
+Command to label a node:  
+`kubectl label nodes <node-name> <label-key>=<label-value>`  
 
-e.g.,
-`kubectl label nodes node01 size=large`
+e.g.,  
+`kubectl label nodes node01 size=large`  
 
 ### Limitations of Selectors
 - For simple scenarios, can only assign Pod to one Node via a label, cannot have more nuanced rules, so instead use Node Affinity.
@@ -65,7 +66,6 @@ spec:
 ### Type of Node Affinity 
 
 #### requiredDuringSchedulingIgnoredDuringExecution
-
 When a pod is scheduled, no matching label means the Scheduler will not schedule the Pod. If a Pod is running and some Node Affinity rule changes the Affinity, the Pod will continue run on the Node.
 
 #### preferredDuringSchedulingIgnoredDuringExecution

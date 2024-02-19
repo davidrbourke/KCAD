@@ -93,10 +93,10 @@ kubectl get persistentvolumeclaim
 kubectl delete persistentvolumeclaim myclaim
 ```
 
-By default, deleteing a PVC is set to Retain the PV until it is manually reclaimed by an Administrator. You can control the delete behaviour, to release the PV for reallocation automatically with the property: **persistentVolumeReclaimPolicy: Recyle**. Optios:
+By default, deleteing a PVC is set to Retain the PV until it is manually reclaimed by an Administrator. You can control the delete behaviour, to release the PV for reallocation automatically with the property: **persistentVolumeReclaimPolicy: Recyle**. Options:
 - Retain: Have to manually delete the PV.
-- Delete: Deletes the PV when the PVC is delete.
-- Recycyle: Releases the PV and deletes any data on it, the PV can be allocated to a new PVC.
+- Delete: Deletes the PV when the PVC is deleted.
+- Recycle: Releases the PV and deletes any data on it, the PV can be allocated to a new PVC.
 
 ## Using Persistent Volume Claims in Pods
 
