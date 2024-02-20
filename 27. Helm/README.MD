@@ -23,7 +23,7 @@ Together the templates and the values file form a Helm Chart:
 
 Examples can be found: https://artifacthub.io/
 Or via searching: `helm search hub <item to search>`  
-To search other repos, you must a repository, e.g., the bitnami repo:
+To search other repos, you must register the other repository, e.g., the bitnami repo:
 
 1. Add the repo `helm repo add bitnami https://charts.bitnami.com/bitnami`
 2. Search `helm search hub <item to search>`

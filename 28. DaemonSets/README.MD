@@ -68,7 +68,7 @@ Set the `.spec.template.spec.priorityClassName` to a higher class:
 
 ### Priorty Class
 
-You create the Priority Class resources, and match the name of the Priority Class with the priorityClassName on the DaemonSet. The higher the value, the higher the priority (any 32 bit integer number smaller than or equalt to 1 billion).
+You create the Priority Class resources, and match the name of the Priority Class with the priorityClassName on the DaemonSet. The higher the value, the higher the priority (any 32 bit integer number smaller than or equal to 1 billion).
 
 ```
 apiVersion: scheduling.k8s.io/v1

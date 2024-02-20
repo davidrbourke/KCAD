@@ -24,7 +24,7 @@ An API group can support multiple groups at the same time, you can create the re
 
 The **Storage Version** is when you create a resource with one of the non-preferred versions, e.g. v1beta1, it will be stored in etcd with the storage version, e.g. v1. Only one version is stored as the storage version.
 
-The preferred version will be listed if you go to the REST API of the resource, e.g. <clusterIP>:<port>/apis/batch (will show the preferred version for the **batch** resource). Cannot currently see the Storage Version. You would have to query the ectd database itself.
+The preferred version will be listed if you go to the REST API of the resource, e.g. <clusterIP>:<port>/apis/batch (will show the preferred version for the **batch** resource). Cannot currently see the Storage Version. You would have to query the etcd database itself.
 
 ### Get the preferred version
 1. Proxy to the kubernetes REST API  

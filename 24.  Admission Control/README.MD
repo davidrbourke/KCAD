@@ -32,20 +32,20 @@ Update the /etc/kubernetes/manifests/kube-apiserver.yaml `--enable-admission-plu
 E.g., `--enable-admission-plugins=NodeRestriction,NamespaceAutoProvision`
 
 ## To disable Controllers
-`--disable-admission-plugins=NodeRestriction=NodespaceAutoProvision`
+`--disable-admission-plugins=NodeRestriction,NodespaceAutoProvision`
 
 **NamespaceAutoProvision (depricated) is now replace by NamespaceLifecycle admissions controller.**
 
 The NamespaceLifecycle admission controller will make sure that requests to a non-existent namespace are rejected and that the default namespaces such as default, kube-system and kube-public cannot be deleted.
 
-To get a list of the default Admission Controller enabled for a Pod, connect to the kube-apiserver-controlplane Pod:
+To get a list of the default Admission Controllers enabled for a Pod, connect to the kube-apiserver-controlplane Pod:
 ```
 kubectl exec -it kube-apiserver-controlplane -n kube-system -- kube-apiserver -h | grep 'enable-admission-plugins'
 ```
 
 ## Validating and Mutating Admission Controllers
 
-The Namespace exists admission controller is a **validating** controller.  
+The 'Namespace exists' admission controller is a **validating** controller.  
 DefaultStorageClass is a **mutating** controller, it will watch for a creating Pod and modifiy the request to add a default storage class to a request if it is missing from the Pod definition.  It can change or mutate the object before it is created.
 
 The mutation controller runs first, as then the configuration can be validated after, including the mutated changes.  
