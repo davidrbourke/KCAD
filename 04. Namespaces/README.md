@@ -68,8 +68,7 @@ So you don't have to specify the namespace with each command:
 `kubectl config set-context $(kubectl config current-context) --namespace=dev`  
 
 ## Resource Quota
-See the yaml file:
-`kubectl create -f compute-quota.yml`
+A Resource Quota sets cpu and memory limits for the sum of all the resources in the namespace.  
 
 ```
 apiVersion: v1

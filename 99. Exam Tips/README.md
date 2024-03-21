@@ -34,6 +34,12 @@ kubectl expose pod httpd --name httpd --port=80 --type=ClusterIP --dry-run=clien
 Or in one command
 `kubectl run httpd --image=httpd:alpine --port=80 --expose=true`  
 
+Change the default namespace from default  
+(Useful so you don't have to keep typing it)
+```
+ kubectl config set-context --current --namespace <namespace>
+```
+
 ## Count of line:
 Use pipe wc -l  
 This count will include any headers so -1  
@@ -47,3 +53,17 @@ cat /etc/os-release
 cat /etc/*release*
 ```
 
+
+## Time Management
+2 hours & 19 questions. 
+
+1. It is vital to attempt all the questions, do not get stuck early on in difficult questions, skip the tough ones to get through the easy ones first, then go back over the skipped ones.
+2. Do not get stuck on any question, even on easy questions, if you can't make sense of the error, mark it for review and come back later if there it time. Troubleshooting issues is for after you have attempted all the questions. The goal is to get through ALL the EASY questions first.
+3. Be really good with YAML. If you have to fix e.g, yaml indentations, etc, then you will not get through it, they don't have to look pretty. Only the end result is evaluated (e.g., the created object).
+4. Use alias names and shortcuts, e.g. ns for namespace, etc.
+
+Watch this: https://www.youtube.com/watch?v=rnemKrveZks
+
+
+## Kube API Server YAML
+/etc/kubernetes/manifest/kube-apiserver.yam

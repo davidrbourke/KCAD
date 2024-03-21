@@ -47,7 +47,7 @@ selector:
 ## Updates and Rollbacks
 A new deployment rollout creates a new deployment revision. This keeps track of the changes made to our deployment.
 
-See the rollout status of the status:  
+See the status of the rollout:  
 `kubectl rollout status deployment/<deployment-name>`
 
 See the rollout history:  
@@ -81,12 +81,14 @@ A rollback will rollback to the previous replica set:
 To rollback to a specific revision:  
 `kubectl rollout undo deployment/<deployment-name> --to-revision=1`  
 
-## Blue/Green and Cannary Deployment
+## Blue/Green and Canary Deployment
 
 ### Blue/Green
-Both new and old version are deployed, 100% of traffic routes to Blue/old version.  
-Tests can be run against the Green/new version.  
-Traffic can be switched to the Green/new deployment.  
+
+#### Steps to perform
+1. Both new and old version are deployed, 100% of traffic routes to Blue/old version.  
+2. Tests can be run against the Green/new version.  
+3. Traffic can be switched to the Green/new deployment.  
 
 The label on the Blue deployment service, e.g. version: v1, matches the label on the Blue Deployment.  
 The Green deployment is deployed, and the Green service label points to the Green deployment labels, e.g. version: v2.  
@@ -246,7 +248,7 @@ subdomain: mysql-h
 hostname: mysql-pod
 ```
 
-However in the above scenario, all Pods would get the same A Name record. A Stateful doesn't require you to do this, it automatically creates the DNS A Name records with the unique name for each pod: `<pod-name>-0`, `<pod-name>-1`, etc. That is why you must specify the serviceName in the Stateful: to link the Pods in the Stateful set to the Service Name, so the headless service creates the unqiue DNS entries for each Pod.
+However in the above scenario, all Pods would get the same A Name record. A StatefulSet doesn't require you to do this, it automatically creates the DNS A Name records with the unique name for each pod: `<pod-name>-0`, `<pod-name>-1`, etc. That is why you must specify the serviceName in the StatefulSet: to link the Pods in the StatefulSet set to the Service Name, so the headless service creates the unique DNS entries for each Pod.
 
 ### Storage in Stateful Sets
 By default with Storage Volumes in a Deployment, all pods would use the same Persistent Volume. For Stateful sets, you might want each Pod to have unique storage. Each Pod needs its own Persistent Volume Claim.

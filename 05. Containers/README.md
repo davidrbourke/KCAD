@@ -9,7 +9,7 @@ Steps with docker, example with python
 5. Copy source folder to /opt folder
 6. Run the web server using flask command
 
-Build image
+Build image  
 Push to registry
 
 ## Dockerfile
@@ -94,8 +94,8 @@ spec:
   containers:
     - name: webapp-green
       image: kodekloud/webapp-color
-      args: ["python", "app"]
-      command: ["--color", "green"]
+      args: ["--color", "green"]
+      command: ["python", "app"]
 ```
 
 

@@ -1,5 +1,5 @@
 # Pods
-Kubernetes YAML definition file always contains required fields:
+A Kubernetes YAML definition file always contains required fields:
 - apiVersion - version of kubernetes api used to create the object - must use right version, e.g. v1 (string value)
 - kind - type object, e.g. Pod (string value)
 - metadata - data about the object, e.g., name, labels in dictionary form

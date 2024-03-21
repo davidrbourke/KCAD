@@ -8,7 +8,7 @@ Configmaps store data in plaintext. Secrets are for **sensitive information**, t
 
 ## Imperative
 
-From-literal:
+From-literal:  
 *Note: generic keyword is a type of secret, there are different types.*
 ```
 kubectl create secret generic <name> --from-literal=<key>=<value>
@@ -79,11 +79,11 @@ spec:
 1. Secrets are not encrypted, only encoded, so don't check secrets into code repo.
 2. Secrets are not encrypted in etcd, so consider enabling encryption-at-rest. There is an EncryptionConfiguration kind object to do this.
 3. Anyone able to create pods/deployments in the Namespace can access those secrets in the Namespace.
-4. Consider Role Base Access Control
+4. Consider Role Based Access Control
 5. Consider 3rd party secret store providers, e.g. Vault, or a cloud provider
 6. A secret is only sent to a Node if a Pod on that Node requires it
 7. Kubectl stores the secret into a tmpfs so that secret is not written to disk storage
-8. Once a Pod that depends on a secret is deleted, kubelet will delete the local copy of there secret
+8. Once a Pod that depends on a secret is deleted, kubelet will delete the local copy of the secret
 
 ## Lab
 ** Lab used envFrom to load secrets, but this has gone from the Kubernetes documents - is envFrom still valid in 1.28? **
