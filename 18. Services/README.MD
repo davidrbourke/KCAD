@@ -46,7 +46,7 @@ To access using curl:
 The Service can map to multiple Pods using the matching labels, and Service acts as a built in Load Balancer using a random algorithm. This works across Pods across all Nodes.  
 
 ## Cluster IP Service
-To connect internal layers of the application, e.g. frontend to backend, internal Pod IPs are not static, Pods restarting gets a new IP. How to group the backend Pods together and create a single endpoint for the frontend to connect to the backend? Deploy a Cluster IP Service between the layers. Each Service gets a name and IP, the name can be used by other Pods to access the service's Pods. **Endpoints** are visible in the 'describe' command for the Service, it will show how many Pods the Service is routing traffic to.
+To connect internal layers of the application, e.g. frontend to backend, internal Pod IPs are not static, Pods restarting gets a new IP. How to group the backend Pods together and create a single endpoint for the frontend to connect to the backend? Deploy a Cluster IP Service between the layers. Each Service gets a name and IP, the name can be used by other Pods to access the service's Pods. **Endpoints** are visible in the 'describe' command for the Service, it will show how many Pods the Service is routing traffic to. ClusterIP is the default service type if you don't specify the type.
 
 ```
 apiVersion: v1
