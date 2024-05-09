@@ -2,9 +2,11 @@
 
 Running a Pod so it shuts down after the required task is complete.
 
-One way around this is to set the **restartPolicy: never**
+Only the restart policies **never** and **OnFailure** are allowed. The restart policy **always** is not allowed for a Job.
+- **restartPolicy: Never**: Does not restart the terminated container.  
+- **restartPolicy: OnFailure**: On container error, the Pod stays on the Node but the Container is re-run, your application must handle this scenario.  
 
-A Job is used to run a set of Pods for a given task to completion. The apiVersion is **apiVersion: batch/v1**.
+A Job is used to run a set of Pods for a given task to completion. The apiVersion is **batch/v1**.
 
 ```
 apiVersion: batch/v1
@@ -95,3 +97,5 @@ spec:
            name: throw-dice
       restartPolicy: Never                  
 ```
+
+**Exam tip:** Use the kubectl describe job command to see the total suceeds and failure attempts to complete a job, and the status of the job.
