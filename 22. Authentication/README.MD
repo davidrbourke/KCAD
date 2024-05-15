@@ -6,7 +6,7 @@ Who can access the API Server? Methods for authentication:
   - Usernames & passwords
   - Username & token
 - Certificates
-- LDAP (External Providers)
+- LDAP (Lightweight Directory Access Protocol - External Providers)
 - Service Accounts
 
 Users accessing the cluster; Admins, Developers, End Users, Bots (3rd party services).  
@@ -20,7 +20,7 @@ All user access is managed by the API Server. Authentication mechanisms:
 
  ### Static Files
  These are basic approaches, not recommended for production environments (depricated in v1.19 of Kuberentes).  
- Create a list of users in a csv file, with columns: password, user, userid, group (optional). Pass the filename as option to the kube api server:
+ Create a list of users in a csv file, with columns: password, user, userid, group (optional). Pass the filename as an option to the kube api server:
  ```
  --basic-auth-file=user-details.csv
  ```
@@ -62,7 +62,7 @@ kubectl get pods
   --certificate-authority ca.crt
 ```
 
-Move this configuration to kube config file, and specify the file options in the kube command. Default looks in $HOME/.kube/config, so don't need to specify the path to the file.
+Move this configuration to the kube config file, and specify the file options in the kube command. Default looks in $HOME/.kube/config, so don't need to specify the path to the file.
 
 ### KubeConfig Format
 - Clusters
@@ -74,7 +74,7 @@ Move this configuration to kube config file, and specify the file options in the
 - Contexts 
   - Which Users to use for which Clusters
 
-This file uses existing users with existing priviledges to access the cluster, it doesn't configure any user accounts. 
+This file uses existing users with existing privileges to access the cluster, it doesn't configure any user accounts. 
 All the sections are arrays, so the file can have many clusters, contexts and users.
 
 ```

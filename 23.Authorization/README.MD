@@ -3,7 +3,7 @@
 ## Authorisation
 What can they do?
 - Role Based Authorization (RBAC)
-- ABAC - Atribute Based Access Control
+- Attribute Based Access Control (ABAC)
 - Node Authorization
 - Webhook Mode
 
@@ -14,16 +14,16 @@ Communication between Pods is restricted using Network Policies.
 There are 2 API groups in Kubernetes.
 
 - /api /v1 core groups
-- /apis named group APIs, going forward all new features will be in named groups.
-  /apps
-  /extensions
-  /networking.k8s.io
-  /storage.k8s.io
-  etc.
+- /apis named group APIs, going forward all new features will be in named groups.  
+  /apps 
+  /extensions  
+  /networking.k8s.io  
+  /storage.k8s.io  
+  etc.  
 
 Kubernetes API reference page can tell you the APIs and verbs.
 
-Can access resources with curl, returns a list of all available APIs (need to pass authenticate certificates):
+Can access resources with curl, returns a list of all available APIs (need to pass authentication certificates):
 ```
 curl http://<cluster>:8001 -k
 ```
@@ -103,7 +103,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
-The roles scope to namespaces, to limit namespaces, specify the namespace in the metadata: namespace: <namespace-name>.   
+The roles scope to namespaces, to limit namespaces, specify the namespace in the metadata: `namespace: <namespace-name>`.   
 
 ```
 kubectl get roles

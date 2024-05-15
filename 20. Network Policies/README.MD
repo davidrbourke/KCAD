@@ -2,7 +2,7 @@
 
 By default, all traffic within the cluster is allowed, any Pod can talk to any other Pod or Service.  
 Network Policies allow limiting traffic, e.g. to prevent a frontend application connecting directly to the database.  
-Once an Network Policy is applied to a Pod, all traffic other than what is allowed it blocked.  
+Once an Network Policy is applied to a Pod, all traffic other than what is allowed is blocked.  
 Use Labels and Selectors to allow traffic.  
 The Network Policy is controlled by the Network Solution, e.g., Kube-router, Calio, etc. Not all Network Solutions support Network Policies.  
 
@@ -34,8 +34,8 @@ spec:
   - Traffic from a Request will always be allowed back by default, so the Egress rule is not required.
   - The calling Pod does not need an Ingress rule to return a request from the Db Pod either, responses to requests are allowed, however, if the DB Pod was initiating its own request back to the calling Pod, the calling Pod may need a rule to Allow Ingress from the DB Pod (unless no Ingress is specified, then it is Open to Allow-All).
 - The podSelector specifies which Pods to protect with the Network Policy, in this case, all Pods with the label role=db.
-- **From** the source of the request that is allowed
-- **Port** the target port on the Pod 
+- **From** the source of the request that is allowed. Multiple sources can be listed.  
+- **Port** the target port on the Pod. If no port is specified, then traffic is allow to all ports. Multiple ports can be listed.  
 
 To limit the Ingress by Pod and Namespace, use the namespaceSelector:
 ```

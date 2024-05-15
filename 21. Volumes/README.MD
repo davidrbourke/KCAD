@@ -49,9 +49,9 @@ Persisent Volumes allow storage to be managed more centrally, without this, each
 A Persistent Volume is cluster wide storage.  Users can select storage from the cluster using Persisent Volume Claims (PVC).  
 
 PV has accessModes:
-- ReadOnlyMany
-- ReadWriteOnce
-- ReadWriteMany
+- ReadOnlyMany: PV can be mounted a read only by **many** Nodes.
+- ReadWriteOnce: PV can be mounted as read-write by a **single** Node - many pods can use it but all must be on the same Node.
+- ReadWriteMany: PV can be mounted as read-write by **many** Nodes.
 
 ```
 apiVersion: v1
@@ -149,7 +149,7 @@ spec:
 There are many other provisions for other clouds, e.g. AWS, Azure, etc.
 
 ### Volume Binding Modes
-By default, when a PVC is created with a StorageClass, the PVC is Bound to the new PV immediately. There is an options to delay the binding until a Pod is using the PVC, this option is **volumeBindingMode: WaitForFirstCustomer**.  
+By default, when a PVC is created with a StorageClass, the PVC is Bound to the new PV immediately. There is an option to delay the binding until a Pod is using the PVC, this option is **volumeBindingMode: WaitForFirstCustomer**.  
 
 ```
 apiVersion: storage.k8s.io/v1
