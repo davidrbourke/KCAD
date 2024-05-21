@@ -43,8 +43,9 @@ Change the default namespace from default
 ## Count of line:
 Use pipe wc -l  
 This count will include any headers so -1  
+--no-headers will remove the column headers, so the header row won't get included in the line count.  
 ```
-kubectl get clusterroles | wc -l
+kubectl get clusterroles --no-headers | wc -l
 ```
 
 ## Identify the OS

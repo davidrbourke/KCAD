@@ -7,12 +7,12 @@ Enforcing rules on the creation of Pods, e.g.:
 
 Admission Controllers help to enforce how a cluster is used:
 - Change the request itself
-- Perform additional operations before the Pods is created
+- Perform additional operations before the Pods are created
 - Allow the Pod to start based on rules
 
 ## Prebuilt Controllers
 - Always pulls images
-- Default storage class, automatically adds PVC to any Pods that doesn't request any.
+- Default storage class, automatically adds a PVC to any Pod that doesn't request any.
 - Event rate limit, to prevent API server overload
 - Namespace exists, won't create a Pod if the namespace doesn't exist (enabled by default)
 - Namespace autoprovision controller, will automatically create the namespace if it doesn't exist (not default)
