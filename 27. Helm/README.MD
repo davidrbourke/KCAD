@@ -60,7 +60,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
 data:
-  myvalue: "some harded value"
+  myvalue: "some hard coded value"
   drink: {{ .Values.favouriteDrink }}
 ```
 
