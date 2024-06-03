@@ -18,7 +18,8 @@ Create a service
 `kubectl expose pod redis --port=6379 --name=redis-service`
 
 **Use --help to check parameters for a command**
-```kubectl run --help
+```
+kubectl run --help
 
 kubectl create deployment webapp --image=kodekloud/webapp-color --replicas=3
 kubectl run custom-nginx --image=nginx --port=8080
@@ -54,6 +55,48 @@ cat /etc/os-release
 cat /etc/*release*
 ```
 
+## Only see the top lines when viewing help
+```
+e.g. with k scale:
+
+kubectl scale -h | head -n 25 
+
+## Easier use less or more
+helm list -h | less
+```
+## Linus shell delete current line
+```
+Ctrl + w
+```
+
+## Export to variable
+```
+export ns="-n secret-ops"
+
+export do="--dry-run=client -oyaml"
+```
+
+## wget
+Test service connectivity using wget.  
+```
+wget -O- {ip}:{port}
+
+# -O- dumps the output to the stdout instead of downloading the file (e.g. index.html) to the file system
+```
+
+## Create a busybox pod and exec into it to test calling services, etc
+This command will:
+- Create the pod
+- Exec you to a shell on the pod
+- Delete (--rm) the pod once you exit.  
+```
+kubectl run busybox --image=busybox -it --rm --restart=Never -- sh
+```
+
+## Service URL if not using IP
+```
+{service-name}.{namespace}.svc.cluster.local:{port}
+```
 
 ## Time Management
 2 hours & 19 questions. 
@@ -62,6 +105,7 @@ cat /etc/*release*
 2. Do not get stuck on any question, even on easy questions, if you can't make sense of the error, mark it for review and come back later if there is time. Troubleshooting issues is for after you have attempted all the questions. The goal is to get through ALL the EASY questions first.
 3. Be really good with YAML. If you have to fix e.g, yaml indentations, etc, then you will not get through it, they don't have to look pretty. Only the end result is evaluated (e.g., the created object).
 4. Use alias names and shortcuts, e.g. ns for namespace, etc.
+5. Make sure to run the command at the top of each question to make sure you are on the right cluster for the question.
 
 Watch this: https://www.youtube.com/watch?v=rnemKrveZks
 

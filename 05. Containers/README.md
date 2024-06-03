@@ -123,3 +123,88 @@ env:
     valueFrom: 
       secretKeyRef:
 ```
+
+# Example using my Minikube and docker hub
+
+My docker file called 'dockerfile'
+
+```
+FROM busybox:latest
+
+ENV SLEEP_SECONDS=10
+ENV LOOPS=10
+
+ENTRYPOINT ["sh", "-c"]
+CMD ["echo $SLEEP_SECONDS; sleep $SLEEP_SECONDS;"]
+```
+
+Build the docker file
+```
+ docker build -t mysleeper:0.0.a .
+```
+
+Run the image locally - runs for 10 seconds and logs the echo commands
+```
+ docker run mysleeper:0.0.a
+```
+
+Override the environment variable for SLEEP_SECONDS
+```
+ docker run -e SLEEP_SECONDS=5 mysleeper:0.0.a
+```
+
+Override the CMD
+```
+docker run mysleeper:0.0.a -- "echo hi"
+```
+
+Tag the image with my hub repo, and push to the docker hub
+```
+docker image tag mysleeper:0.0.a polarcoder/mysleeper:0.0.a
+docker push polarcoder/mysleeper:0.0.a
+```
+
+Create a pod on the Minikube and get the logs
+```
+ kubectl run mysleeper --image=polarcoder/mysleeper:0.0.a
+ kubectl logs mysleeper
+
+ # Outputs:
+ 10
+```
+
+Pod Yaml to override the environment variable
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: mysleeper
+  name: mysleeper
+spec:
+  containers:
+  - image: polarcoder/mysleeper:0.0.a
+    name: mysleeper
+    env:
+      - name: SLEEP_SECONDS
+        value: "20"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+```
+
+Pod Yaml to override the CMD
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: mysleeper2
+  name: mysleeper2
+spec:
+  containers:
+  - image: polarcoder/mysleeper:0.0.a
+    name: mysleeper2
+    args: ["echo 'Override sleep seconds to 20'; echo $SLEEP_SECONDS; sleep 20;"]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+```

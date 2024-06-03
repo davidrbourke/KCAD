@@ -72,3 +72,14 @@ spec:
 kubectl create service <type> <name> --tcp=<port>:<target-port>
 kubectl create service nodeport my-service --tcp=8080:8080
 ```
+
+### Create Pod and Expose --expose
+```
+kubectl run svc-pod --image=nginx --restart=Never --port=80 -- expose
+
+service/svc-pod created
+pod/svc-pod created
+
+# Get endpints of service
+kubectl get ep
+```
