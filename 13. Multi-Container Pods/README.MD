@@ -50,75 +50,32 @@ The content from the /log directory in container 1, is available in container 2 
 apiVersion: v1
 kind: Pod
 metadata:
-  creationTimestamp: "2024-01-15T18:41:47Z"
   labels:
     name: app
   name: app
   namespace: elastic-stack
-  resourceVersion: "783"
-  uid: d04c10b8-4601-4c65-bd65-989015caa711
 spec:
   containers:
   - image: kodekloud/event-simulator
     imagePullPolicy: Always
     name: app
-    resources: {}
-    terminationMessagePath: /dev/termination-log
-    terminationMessagePolicy: File
     volumeMounts:
     - mountPath: /log
       name: log-volume
-    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-      name: kube-api-access-h589q
-      readOnly: true
   - name: sidecar
     image: kodekloud/filebeat-configured
     volumeMounts:
     - mountPath: /var/log/event-simulator/
       name: log-volume
   dnsPolicy: ClusterFirst
-  enableServiceLinks: true
   nodeName: controlplane
-  preemptionPolicy: PreemptLowerPriority
-  priority: 0
   restartPolicy: Always
-  schedulerName: default-scheduler
-  securityContext: {}
-  serviceAccount: default
-  serviceAccountName: default
-  terminationGracePeriodSeconds: 30
-  tolerations:
-  - effect: NoExecute
-    key: node.kubernetes.io/not-ready
-    operator: Exists
-    tolerationSeconds: 300
-  - effect: NoExecute
-    key: node.kubernetes.io/unreachable
-    operator: Exists
-    tolerationSeconds: 300
   volumes:
   - hostPath:
       path: /var/log/webapp
       type: DirectoryOrCreate
     name: log-volume
-  - name: kube-api-access-h589q
-    projected:
-      defaultMode: 420
-      sources:
-      - serviceAccountToken:
-          expirationSeconds: 3607
-          path: token
-      - configMap:
-          items:
-          - key: ca.crt
-            path: ca.crt
-          name: kube-root-ca.crt
-      - downwardAPI:
-          items:
-          - fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
-            path: namespace
+
 ```
 
 ## Init Containers

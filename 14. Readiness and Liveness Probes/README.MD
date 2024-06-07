@@ -80,7 +80,7 @@ readinessProbe:
 - **initialDelaySeconds** is how long to wait from the when the Pod is Ready until runnning the readinessProbe test, default is 0 seconds, minimum is 1.
 - **periodSeconds** is how long to wait between retries of the test if the first test fails (e.g., because the application is not ready), default is 10 seconds, minimum is 1.
 - **failureThreshold**, by default the probe will make 3 attempts, the failureThreshold will increase/decrease the number of attempts.
-- **successThreshold**, by default, 1 successful test will result in passing the test, you can require more consequtive successful tests with the success threshold.
+- **successThreshold**, by default, 1 successful test will result in passing the test, you can require more consecutive successful tests with the success threshold.
 - **timeoutSeconds** is how long before the probe timesout, default is 1 seconds, minimum is 1.
 - **terminationGracePeriodSeconds** is how long to wait before the kubelet triggers a Pod shutdown, default is 30 seconds, minimum is 1.
 

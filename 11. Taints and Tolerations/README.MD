@@ -54,4 +54,4 @@ To see the Master Node taint:
 
 ## Remove a Taint
 Use the taint command with a hyphen - at the end:
-`kubectl taint nodes controlplane  node-role.kubernetes.io/control-plane:NoSchedule-`
+`kubectl taint nodes controlplane node=role.kubernetes.io/control-plane:NoSchedule-`

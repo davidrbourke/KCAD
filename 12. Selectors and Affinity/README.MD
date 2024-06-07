@@ -3,7 +3,7 @@
 May wish to assign certain Pods to certain Nodes, e.g., a Node may have more resources.  
 By default, a Pod can be scheduled on any Node.  
 
-There are two ways to limit a Pods to a Node.  
+There are two ways to limit Pods to a Node.  
 - Node Selectors (easiest way)
 - Node Affinity
 
